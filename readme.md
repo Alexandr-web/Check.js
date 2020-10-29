@@ -1,4 +1,4 @@
-# Documentation Check.js
+# What is it?
 ## Keys
 | Key | Explanation |
 | ------ | ------ |
@@ -15,6 +15,8 @@
 - ### mail 
     #### Example
     ```javascript
+    import { Valval } from 'valval';
+    
     const options = {
 	    mail: {
 	    	selectorEl: '.email',
@@ -22,11 +24,13 @@
 	    }
     }
     
-    new Check().start(options);
+    new Valval().start(options);
     ```
 - ### firstName 
     #### Example
     ```javascript
+    import { Valval } from 'valval';
+    
     const options = {
 	    firstName: {
 		selectorEl: '.first-name',
@@ -34,11 +38,13 @@
 	    }
     }
     
-    new Check().start(options);
+    new Valval().start(options);
     ```
 - ### lastName 
     #### Example
     ```javascript
+    import { Valval } from 'valval';
+    
     const options = {
 	    lastName: {
 		selectorEl: '.last-name',
@@ -46,11 +52,13 @@
 	    }
     }
     
-    new Check().start(options);
+    new Valval().start(options);
     ```
 - ### password
     #### Example
     ```javascript
+    import { Valval } from 'valval';
+    
     const options = {
 	    password: {
 		selectorEl: '.password',
@@ -58,11 +66,13 @@
 	    }
     }
     
-    new Check().start(options);
+    new Valval().start(options);
     ```
 - ### date
     #### Example
     ```javascript
+    import { Valval } from 'valval';
+    
     const options = {
 	    date: {
 		selectorEl: '.date',
@@ -70,11 +80,13 @@
 	    }
     }
     
-    new Check().start(options);
+    new Valval().start(options);
     ```
 - ### tel
     #### Example
     ```javascript
+    import { Valval } from 'valval';
+    
     const options = {
 	    tel: {
 		selectorEl: '.tel',
@@ -82,11 +94,13 @@
 	    }
     }
     
-    new Check().start(options);
+    new Valval().start(options);
     ```
 - ### repeatPassword
     #### Example
     ```javascript
+    import { Valval } from 'valval';
+    
     const options = {
 	    repeatPassword: {
 		selectorEl: '.repeatPassword',
@@ -94,7 +108,7 @@
 	    }
     }
     
-    new Check().start(options);
+    new Valval().start(options);
     ```
     
 ## Options
@@ -104,15 +118,15 @@
     | required | Boolean | Required input field | ``` required: true  ``` |
     | selectorEl | String | Element selector | ``` selectorEl: '.password' ``` |
     | validationElement | Object | Item options to check | ``` validationElement: { have: true, selectorEl: '.password__valid' } ``` |
-    | classValid | String | Element class after successful check (the default class is .check-valid) | ``` classValid: 'valid' ``` |
-    | classInvalid | String | Element class after unsuccessful validation (the default class is .check-invalid) | ``` classInvalid: 'invalid' ``` |
+    | classValid | String | Element class after successful check (the default class is .valval-valid) | ``` classValid: 'valid' ``` |
+    | classInvalid | String | Element class after unsuccessful validation (the default class is .valval-invalid) | ``` classInvalid: 'invalid' ``` |
         
     ### Options in ``` validationElement ```
     | Option | Type | Value | Example |
     | ------ | ------ | ------ | ------ |
     | have | Boolean | Will there be an item to check | ``` have: true ``` |
-    | classValid | String | Element class after successful check (the default class is .check-valid-el) | ``` classValid: 'valid-el' ``` |
-    | classInvalid | String | Element class after unsuccessful check (the default class is .check-invalid-el) | ``` classInvalid: 'invalid-el' ``` |
+    | classValid | String | Element class after successful check (the default class is .valval-valid-el) | ``` classValid: 'valid-el' ``` |
+    | classInvalid | String | Element class after unsuccessful check (the default class is .valval-invalid-el) | ``` classInvalid: 'invalid-el' ``` |
     | selectorEl | String | Element selector | ``` selectorEl: '.validation-el' ``` |
     | textWhenValid | String | Element text after successful check | ``` textWhenValid: 'Successfully' ``` |
     | textWhenInvalid | String | Element text after unsuccessful check | ``` textWhenValid: 'Unsuccessfully' ``` |
@@ -161,119 +175,3 @@
     | ------ | ------ | ------ | ------ |
     | minLength | Number | Minimum number of characters per line (default 1) | ``` minLength: 6 ``` |
     | maxLength | Number | Maximum number of characters per line (infinity by default) | ``` maxLength: 6 ``` |
-
-## Examples of work
-- ### Simplest form validation
-    #### HTML Code
-    ```html
-        <!-- HTML code -->
-        <form action="/" method="POST">
-            <input type="text" placeholder="Email" class="email" name="email">
-            <input type="password" placeholder="Password" class="password" name="password">
-            <input type="text" placeholder="Date" class="date" name="date">
-            <input type="submit" value="Submit">
-        </form>
-            
-        <!-- Include the library file -->
-        <script src="./js/Check.js"></script>
-        <!-- Our file -->
-        <script src="./js/script.js"></script>
-    ```
-            
-    #### CSS Code
-    ```css
-        input {
-            outline: none;
-        }
-            
-        .check-valid {
-            background-color: rgba(0, 255, 0, 0.3);
-        }
-            
-        .check-invalid {
-            background-color: rgba(255, 0, 0, 0.3);
-        }
-    ```
-        
-    #### JavaScript Code
-    ```javascript
-        // Writing options for your form
-        const options = {
-            mail: {
-                selectorEl: '.email',
-                required: true
-            },
-            password: {
-                selectorEl: '.password',
-                required: true,
-                minLength: 6
-            },
-            date: {
-                selectorEl: '.date',
-                required: true
-            }
-        }
-    
-        new Check().start(options);
-    ```
-- ### Email and password verification
-    #### HTML Code
-    ```html
-        <!-- HTML code -->
-        <form action="/" method="POST">
-            <input type="password" placeholder="Password" class="password" name="password">
-            <span class="password__valid-el"></span>
-            <input type="password" placeholder="Repeat password" class="repeat-password">
-            <span class="repeat-password__valid-el"></span>
-            <input type="text" placeholder="Email" class="email" name="email">
-            <span class="email__valid-el"></span>
-            <input type="submit" value="Submit">
-        </form>
-            
-        <!-- Include the library file -->
-        <script src="./js/Check.js"></script>
-        <!-- Our file -->
-        <script src="./js/script.js"></script>
-    ```
-    #### JavaScript Code
-    ```javascript
-        // Writing options for your form
-        const options = {
-            password: {
-                selectorEl: '.password',
-                required: true,
-                minLength: 6,
-                maxLength: 12,
-                onlyEn: true,
-                validationElement: {
-                    have: true,
-                    selectorEl: '.password__valid-el',
-                    textWhenValid: 'Ok',
-                    textWhenInvalid: 'Bad'
-                }
-            },
-            mail: {
-                selectorEl: '.email',
-                required: true,
-                validationElement: {
-                    have: true,
-                    selectorEl: '.email__valid-el',
-                    textWhenValid: 'Ok',
-                    textWhenInvalid: 'Bad'
-                }
-            },
-            repeatPassword: {
-                required: true,
-                repeatAt: '.password',
-                selectorEl: '.repeat-password',
-                validationElement: {
-                    have: true,
-                    selectorEl: '.repeat-password__valid-el',
-                    textWhenValid: 'Ok',
-                    textWhenInvalid: 'Bad'
-                }
-            }
-        }
-    
-        new Check().start(options);
-    ```
