@@ -17,8 +17,8 @@
     ```javascript
     const options = {
 	    mail: {
-		    selectorEl: '.email',
-		    required: true
+	    	selectorEl: '.email',
+		required: true
 	    }
     }
     
@@ -29,8 +29,8 @@
     ```javascript
     const options = {
 	    firstName: {
-		    selectorEl: '.first-name',
-		    required: true
+		selectorEl: '.first-name',
+		required: true
 	    }
     }
     
@@ -41,8 +41,8 @@
     ```javascript
     const options = {
 	    lastName: {
-		    selectorEl: '.last-name',
-		    required: true
+		selectorEl: '.last-name',
+		required: true
 	    }
     }
     
@@ -53,8 +53,8 @@
     ```javascript
     const options = {
 	    password: {
-		    selectorEl: '.password',
-		    required: true
+		selectorEl: '.password',
+		required: true
 	    }
     }
     
@@ -65,8 +65,8 @@
     ```javascript
     const options = {
 	    date: {
-		    selectorEl: '.date',
-		    required: true
+		selectorEl: '.date',
+		required: true
 	    }
     }
     
@@ -77,8 +77,8 @@
     ```javascript
     const options = {
 	    tel: {
-		    selectorEl: '.tel',
-		    required: true
+		selectorEl: '.tel',
+		required: true
 	    }
     }
     
@@ -89,8 +89,8 @@
     ```javascript
     const options = {
 	    repeatPassword: {
-		    selectorEl: '.repeatPassword',
-		    required: true
+		selectorEl: '.repeatPassword',
+		required: true
 	    }
     }
     
