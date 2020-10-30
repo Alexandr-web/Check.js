@@ -184,7 +184,7 @@ var Valval = /*#__PURE__*/function () {
             options[item].minLength = options[item].minLength ? options[item].minLength : 1; // Max length
 
             options[item].maxLength = options[item].maxLength ? options[item].maxLength : '';
-          } // Regular expressions
+          } // Regular expressions password
 
 
           if (item === 'password') {
@@ -192,37 +192,43 @@ var Valval = /*#__PURE__*/function () {
             _this2.regexp_password_only_rus = eval("/^[\u0410-\u042F|\u0430-\u044F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
             _this2.regexp_password_only_numbers = eval("/^\\d{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
             _this2.regexp_password_only_en = eval("/^[A-Z|a-z]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
-          }
+          } // Regular expressions mail
+
 
           if (item === 'mail') {
             _this2.regexp_mail = /^[A-Z|a-z|\d|\_|\-|\.]{1,}@[A-Z|a-z]{1,}\.[A-Z|a-z]{1,}$/;
-          }
+          } // Regular expressions date
+
 
           if (item === 'date') {
             _this2.regexp_date = /^(\d{2,2}[\/|\.|\-]){2,2}\d{4,4}$/;
             _this2.regexp_date_only_slash = /^(\d{2,2}\/){2,2}\d{4,4}$/;
             _this2.regexp_date_only_dot = /^(\d{2,2}\.){2,2}\d{4,4}$/;
             _this2.regexp_date_only_hyphen = /^(\d{2,2}\-){2,2}\d{4,4}$/;
-          }
+          } // Regular expressions tel
+
 
           if (item === 'tel') {
             _this2.regexp_tel = eval("/^\\d{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
-          }
+          } // Regular expressions first name
+
 
           if (item === 'firstName') {
             _this2.regexp_first_name = eval("/^[a-z|A-Z|\u0430-\u044F|\u0410-\u042F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
             _this2.regexp_first_name_only_rus = eval("/^[\u0410-\u042F|\u0430-\u044F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
             _this2.regexp_first_name_only_en = eval("/^[A-Z|a-z]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
-          }
+          } // Regular expressions last name
+
 
           if (item === 'lastName') {
             _this2.regexp_last_name = eval("/^[a-z|A-Z|\u0430-\u044F|\u0410-\u042F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
             _this2.regexp_last_name_only_rus = eval("/^[\u0410-\u042F|\u0430-\u044F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
             _this2.regexp_last_name_only_en = eval("/^[A-Z|a-z]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
-          }
+          } // Regular expressions required
+
 
           _this2.regexp_required = /.{1,}/;
-          _this2.options = options;
+          _this2.options = options; // get size
 
           var getSize = function getSize() {
             var set = new Set();
@@ -236,7 +242,7 @@ var Valval = /*#__PURE__*/function () {
 
           getSize();
           options[item].element.addEventListener('input', function () {
-            var value = options[item].element.value;
+            var value = options[item].element.value; // password
 
             if (item === 'password' && !options[item].onlyRus && !options[item].onlyNumbers && !options[item].onlyEn) {
               if (options[item].objOptions.repeatPassword) {
@@ -258,7 +264,8 @@ var Valval = /*#__PURE__*/function () {
               } else {
                 _this2.validationElement(_this2.regexp_password, value, options[item]);
               }
-            }
+            } // password and only rus
+
 
             if (item === 'password' && options[item].onlyRus) {
               if (options[item].objOptions.repeatPassword) {
@@ -280,7 +287,8 @@ var Valval = /*#__PURE__*/function () {
               } else {
                 _this2.validationElement(_this2.regexp_password_only_rus, value, options[item]);
               }
-            }
+            } // password and only numbers
+
 
             if (item === 'password' && options[item].onlyNumbers) {
               if (options[item].objOptions.repeatPassword) {
@@ -302,7 +310,8 @@ var Valval = /*#__PURE__*/function () {
               } else {
                 _this2.validationElement(_this2.regexp_password_only_numbers, value, options[item]);
               }
-            }
+            } // password and only en
+
 
             if (item === 'password' && options[item].onlyEn) {
               if (options[item].objOptions.repeatPassword) {
@@ -324,31 +333,38 @@ var Valval = /*#__PURE__*/function () {
               } else {
                 _this2.validationElement(_this2.regexp_password_only_en, value, options[item]);
               }
-            }
+            } // mail
+
 
             if (item === 'mail') {
               _this2.validationElement(_this2.regexp_mail, value, options[item]);
-            }
+            } // date
+
 
             if (item === 'date' && !options[item].onlySlash && !options[item].onlyDot && !options[item].onlyHyphen) {
               _this2.validationElement(_this2.regexp_date, value, options[item]);
-            }
+            } // date and only only slash
+
 
             if (item === 'date' && options[item].onlySlash) {
               _this2.validationElement(_this2.regexp_date_only_slash, value, options[item]);
-            }
+            } // date and only only dot
+
 
             if (item === 'date' && options[item].onlyDot) {
               _this2.validationElement(_this2.regexp_date_only_dot, value, options[item]);
-            }
+            } // date and only only hyphen
+
 
             if (item === 'date' && options[item].onlyHyphen) {
               _this2.validationElement(_this2.regexp_date_only_hyphen, value, options[item]);
-            }
+            } // tel
+
 
             if (item === 'tel') {
               _this2.validationElement(_this2.regexp_tel, value, options[item]);
-            }
+            } // repeat password
+
 
             if (item === 'repeatPassword') {
               if (!document.querySelector(options['repeatPassword'].repeatAt).value) {
@@ -364,47 +380,83 @@ var Valval = /*#__PURE__*/function () {
 
                 _this2.validationElement(_this2.regexp_repeat_password, value, options[item]);
               }
-            }
+            } // First name
+
 
             if (item === 'firstName' && !options[item].onlyRus && !options[item].onlyEn && !options[item].bigFirstSymbol) {
               _this2.validationElement(_this2.regexp_first_name, value, options[item]);
-            }
+            } // First name and big first symbol
+
 
             if (item === 'firstName' && options[item].bigFirstSymbol) {
               _this2.regexp_first_name = eval("/^[A-Z|\u0410-\u042F]{1,1}[a-z|\u0430-\u044F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
 
               _this2.validationElement(_this2.regexp_first_name, value, options[item]);
-            }
+            } // First name and only en
+
 
             if (item === 'firstName' && options[item].onlyEn) {
+              _this2.regexp_first_name_only_en = eval("/^[a-z]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
+
+              _this2.validationElement(_this2.regexp_first_name_only_en, value, options[item]);
+            } // First name and only en and big first symbol
+
+
+            if (item === 'firstName' && options[item].onlyEn && options[item].bigFirstSymbol) {
               _this2.regexp_first_name_only_en = eval("/^[A-Z]{1,1}[a-z]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
 
               _this2.validationElement(_this2.regexp_first_name_only_en, value, options[item]);
-            }
+            } // First name and only rus
+
 
             if (item === 'firstName' && options[item].onlyRus) {
+              _this2.regexp_first_name_only_rus = eval("/^[\u0430-\u044F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
+
+              _this2.validationElement(_this2.regexp_first_name_only_rus, value, options[item]);
+            } // First name and only rus and big first symbol
+
+
+            if (item === 'firstName' && options[item].onlyRus && options[item].bigFirstSymbol) {
               _this2.regexp_first_name_only_rus = eval("/^[\u0410-\u042F]{1,1}[\u0430-\u044F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
 
               _this2.validationElement(_this2.regexp_first_name_only_rus, value, options[item]);
-            }
+            } // last name
+
 
             if (item === 'lastName' && !options[item].onlyRus && !options[item].onlyEn) {
               _this2.validationElement(_this2.regexp_last_name, value, options[item]);
-            }
+            } // last name and big first symbol
+
 
             if (item === 'lastName' && options[item].bigFirstSymbol) {
               _this2.regexp_last_name = eval("/^[A-Z|\u0410-\u042F]{1,1}[a-z|\u0430-\u044F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
 
               _this2.validationElement(_this2.regexp_last_name, value, options[item]);
-            }
+            } // last name and only en
+
 
             if (item === 'lastName' && options[item].onlyEn) {
+              _this2.regexp_last_name_only_en = eval("/^[a-z]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
+
+              _this2.validationElement(_this2.regexp_last_name_only_en, value, options[item]);
+            } // last name and only en and big first symbol
+
+
+            if (item === 'lastName' && options[item].onlyEn && options[item].bigFirstSymbol) {
               _this2.regexp_last_name_only_en = eval("/^[A-Z]{1,1}[a-z]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
 
               _this2.validationElement(_this2.regexp_last_name_only_en, value, options[item]);
-            }
+            } // last name and only rus
+
 
             if (item === 'lastName' && options[item].onlyRus) {
+              _this2.regexp_last_name_only_rus = eval("/^[\u0430-\u044F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
+
+              _this2.validationElement(_this2.regexp_last_name_only_rus, value, options[item]);
+            } // last name and only rus and big first symbol
+
+
+            if (item === 'lastName' && options[item].onlyRus && options[item].bigFirstSymbol) {
               _this2.regexp_last_name_only_rus = eval("/^[\u0410-\u042F]{1,1}[\u0430-\u044F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
 
               _this2.validationElement(_this2.regexp_last_name_only_rus, value, options[item]);

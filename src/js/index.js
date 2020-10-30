@@ -139,39 +139,46 @@ class Valval {
                     options[item].maxLength = options[item].maxLength ? options[item].maxLength : '';
                 }
 
-                // Regular expressions
+                // Regular expressions password
                 if (item === 'password') {
                     this.regexp_password = eval(`/^.{${options[item].minLength},${options[item].maxLength}}$/`);
                     this.regexp_password_only_rus = eval(`/^[А-Я|а-я]{${options[item].minLength},${options[item].maxLength}}$/`);
                     this.regexp_password_only_numbers = eval(`/^\\d{${options[item].minLength},${options[item].maxLength}}$/`);
                     this.regexp_password_only_en = eval(`/^[A-Z|a-z]{${options[item].minLength},${options[item].maxLength}}$/`);
                 }
+                // Regular expressions mail
                 if (item === 'mail') {
                     this.regexp_mail = /^[A-Z|a-z|\d|\_|\-|\.]{1,}@[A-Z|a-z]{1,}\.[A-Z|a-z]{1,}$/;
                 }
+                // Regular expressions date
                 if (item === 'date') {
                     this.regexp_date = /^(\d{2,2}[\/|\.|\-]){2,2}\d{4,4}$/;
                     this.regexp_date_only_slash = /^(\d{2,2}\/){2,2}\d{4,4}$/;
                     this.regexp_date_only_dot = /^(\d{2,2}\.){2,2}\d{4,4}$/;
                     this.regexp_date_only_hyphen = /^(\d{2,2}\-){2,2}\d{4,4}$/;
                 }
+                // Regular expressions tel
                 if (item === 'tel') {
                     this.regexp_tel = eval(`/^\\d{${options[item].minLength},${options[item].maxLength}}$/`);
                 }
+                // Regular expressions first name
                 if (item === 'firstName') {
                     this.regexp_first_name = eval(`/^[a-z|A-Z|а-я|А-Я]{${options[item].minLength},${options[item].maxLength}}$/`);
                     this.regexp_first_name_only_rus = eval(`/^[А-Я|а-я]{${options[item].minLength},${options[item].maxLength}}$/`);
                     this.regexp_first_name_only_en = eval(`/^[A-Z|a-z]{${options[item].minLength},${options[item].maxLength}}$/`);
                 }
+                // Regular expressions last name
                 if (item === 'lastName') {
                     this.regexp_last_name = eval(`/^[a-z|A-Z|а-я|А-Я]{${options[item].minLength},${options[item].maxLength}}$/`);
                     this.regexp_last_name_only_rus = eval(`/^[А-Я|а-я]{${options[item].minLength},${options[item].maxLength}}$/`);
                     this.regexp_last_name_only_en = eval(`/^[A-Z|a-z]{${options[item].minLength},${options[item].maxLength}}$/`);
                 }
+                // Regular expressions required
                 this.regexp_required = /.{1,}/;
 
                 this.options = options;
 
+                // get size
                 const getSize = () => {
                     const set = new Set();
 
@@ -187,6 +194,7 @@ class Valval {
                 options[item].element.addEventListener('input', () => {
                     const value = options[item].element.value;
 
+                    // password
                     if (item === 'password' &&
                         !options[item].onlyRus &&
                         !options[item].onlyNumbers &&
@@ -206,6 +214,7 @@ class Valval {
                             this.validationElement(this.regexp_password, value, options[item]);
                         }
                     }
+                    // password and only rus
                     if (item === 'password' && options[item].onlyRus) {
                         if (options[item].objOptions.repeatPassword) {
                             if (value) {
@@ -222,6 +231,7 @@ class Valval {
                             this.validationElement(this.regexp_password_only_rus, value, options[item]);
                         }
                     }
+                    // password and only numbers
                     if (item === 'password' && options[item].onlyNumbers) {
                         if (options[item].objOptions.repeatPassword) {
                             if (value) {
@@ -238,6 +248,7 @@ class Valval {
                             this.validationElement(this.regexp_password_only_numbers, value, options[item]);
                         }
                     }
+                    // password and only en
                     if (item === 'password' && options[item].onlyEn) {
                         if (options[item].objOptions.repeatPassword) {
                             if (value) {
@@ -254,27 +265,34 @@ class Valval {
                             this.validationElement(this.regexp_password_only_en, value, options[item]);
                         }
                     }
+                    // mail
                     if (item === 'mail') {
                         this.validationElement(this.regexp_mail, value, options[item]);
                     }
+                    // date
                     if (item === 'date' &&
                         !options[item].onlySlash &&
                         !options[item].onlyDot &&
                         !options[item].onlyHyphen) {
                         this.validationElement(this.regexp_date, value, options[item]);
                     }
+                    // date and only only slash
                     if (item === 'date' && options[item].onlySlash) {
                         this.validationElement(this.regexp_date_only_slash, value, options[item]);
                     }
+                    // date and only only dot
                     if (item === 'date' && options[item].onlyDot) {
                         this.validationElement(this.regexp_date_only_dot, value, options[item]);
                     }
+                    // date and only only hyphen
                     if (item === 'date' && options[item].onlyHyphen) {
                         this.validationElement(this.regexp_date_only_hyphen, value, options[item]);
                     }
+                    // tel
                     if (item === 'tel') {
                         this.validationElement(this.regexp_tel, value, options[item]);
                     }
+                    // repeat password
                     if (item === 'repeatPassword') {
                         if (!document.querySelector(options['repeatPassword'].repeatAt).value) {
                             options[item].valid = false;
@@ -286,38 +304,66 @@ class Valval {
                             this.validationElement(this.regexp_repeat_password, value, options[item]);
                         }
                     }
+                    // First name
                     if (item === 'firstName' &&
                         !options[item].onlyRus &&
                         !options[item].onlyEn &&
                         !options[item].bigFirstSymbol) {
                         this.validationElement(this.regexp_first_name, value, options[item]);
                     }
+                    // First name and big first symbol
                     if (item === 'firstName' && options[item].bigFirstSymbol) {
                         this.regexp_first_name = eval(`/^[A-Z|А-Я]{1,1}[a-z|а-я]{${options[item].minLength},${options[item].maxLength}}$/`);
                         this.validationElement(this.regexp_first_name, value, options[item]);
                     }
+                    // First name and only en
                     if (item === 'firstName' && options[item].onlyEn) {
+                        this.regexp_first_name_only_en = eval(`/^[a-z]{${options[item].minLength},${options[item].maxLength}}$/`);
+                        this.validationElement(this.regexp_first_name_only_en, value, options[item]);
+                    }
+                    // First name and only en and big first symbol
+                    if (item === 'firstName' && options[item].onlyEn && options[item].bigFirstSymbol) {
                         this.regexp_first_name_only_en = eval(`/^[A-Z]{1,1}[a-z]{${options[item].minLength},${options[item].maxLength}}$/`);
                         this.validationElement(this.regexp_first_name_only_en, value, options[item]);
                     }
+                    // First name and only rus
                     if (item === 'firstName' && options[item].onlyRus) {
+                        this.regexp_first_name_only_rus = eval(`/^[а-я]{${options[item].minLength},${options[item].maxLength}}$/`);
+                        this.validationElement(this.regexp_first_name_only_rus, value, options[item]);
+                    }
+                    // First name and only rus and big first symbol
+                    if (item === 'firstName' && options[item].onlyRus && options[item].bigFirstSymbol) {
                         this.regexp_first_name_only_rus = eval(`/^[А-Я]{1,1}[а-я]{${options[item].minLength},${options[item].maxLength}}$/`);
                         this.validationElement(this.regexp_first_name_only_rus, value, options[item]);
                     }
+                    // last name
                     if (item === 'lastName' &&
                         !options[item].onlyRus &&
                         !options[item].onlyEn) {
                         this.validationElement(this.regexp_last_name, value, options[item]);
                     }
+                    // last name and big first symbol
                     if (item === 'lastName' && options[item].bigFirstSymbol) {
                         this.regexp_last_name = eval(`/^[A-Z|А-Я]{1,1}[a-z|а-я]{${options[item].minLength},${options[item].maxLength}}$/`);
                         this.validationElement(this.regexp_last_name, value, options[item]);
                     }
+                    // last name and only en
                     if (item === 'lastName' && options[item].onlyEn) {
+                        this.regexp_last_name_only_en = eval(`/^[a-z]{${options[item].minLength},${options[item].maxLength}}$/`);
+                        this.validationElement(this.regexp_last_name_only_en, value, options[item]);
+                    }
+                    // last name and only en and big first symbol
+                    if (item === 'lastName' && options[item].onlyEn && options[item].bigFirstSymbol) {
                         this.regexp_last_name_only_en = eval(`/^[A-Z]{1,1}[a-z]{${options[item].minLength},${options[item].maxLength}}$/`);
                         this.validationElement(this.regexp_last_name_only_en, value, options[item]);
                     }
+                    // last name and only rus
                     if (item === 'lastName' && options[item].onlyRus) {
+                        this.regexp_last_name_only_rus = eval(`/^[а-я]{${options[item].minLength},${options[item].maxLength}}$/`);
+                        this.validationElement(this.regexp_last_name_only_rus, value, options[item]);
+                    }
+                    // last name and only rus and big first symbol
+                    if (item === 'lastName' && options[item].onlyRus && options[item].bigFirstSymbol) {
                         this.regexp_last_name_only_rus = eval(`/^[А-Я]{1,1}[а-я]{${options[item].minLength},${options[item].maxLength}}$/`);
                         this.validationElement(this.regexp_last_name_only_rus, value, options[item]);
                     }
