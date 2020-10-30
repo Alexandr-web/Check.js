@@ -1,3 +1,4 @@
+``` npm i valval --save ```
 # What is it?
 ## Keys
 | Key | Explanation |
