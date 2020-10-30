@@ -176,6 +176,7 @@ This is a library for form validation ``` npm i valval --save ```
     | maxLength | Number | Maximum number of characters per line (infinity by default) | ``` maxLength: 6 ``` |
     
     ## Example of work
+    
 	HTML Code
 	```html
 	<form action="">
