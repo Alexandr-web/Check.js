@@ -318,7 +318,7 @@ class Valval {
                     }
                     // First name and only en
                     if (item === 'firstName' && options[item].onlyEn) {
-                        this.regexp_first_name_only_en = eval(`/^[a-z]{${options[item].minLength},${options[item].maxLength}}$/`);
+                        this.regexp_first_name_only_en = eval(`/^[A-Z|a-z]{${options[item].minLength},${options[item].maxLength}}$/`);
                         this.validationElement(this.regexp_first_name_only_en, value, options[item]);
                     }
                     // First name and only en and big first symbol
@@ -328,7 +328,7 @@ class Valval {
                     }
                     // First name and only rus
                     if (item === 'firstName' && options[item].onlyRus) {
-                        this.regexp_first_name_only_rus = eval(`/^[а-я]{${options[item].minLength},${options[item].maxLength}}$/`);
+                        this.regexp_first_name_only_rus = eval(`/^[А-Я|а-я]{${options[item].minLength},${options[item].maxLength}}$/`);
                         this.validationElement(this.regexp_first_name_only_rus, value, options[item]);
                     }
                     // First name and only rus and big first symbol
@@ -349,7 +349,7 @@ class Valval {
                     }
                     // last name and only en
                     if (item === 'lastName' && options[item].onlyEn) {
-                        this.regexp_last_name_only_en = eval(`/^[a-z]{${options[item].minLength},${options[item].maxLength}}$/`);
+                        this.regexp_last_name_only_en = eval(`/^[A-Z|a-z]{${options[item].minLength},${options[item].maxLength}}$/`);
                         this.validationElement(this.regexp_last_name_only_en, value, options[item]);
                     }
                     // last name and only en and big first symbol
@@ -359,7 +359,7 @@ class Valval {
                     }
                     // last name and only rus
                     if (item === 'lastName' && options[item].onlyRus) {
-                        this.regexp_last_name_only_rus = eval(`/^[а-я]{${options[item].minLength},${options[item].maxLength}}$/`);
+                        this.regexp_last_name_only_rus = eval(`/^[А-Я|а-я]{${options[item].minLength},${options[item].maxLength}}$/`);
                         this.validationElement(this.regexp_last_name_only_rus, value, options[item]);
                     }
                     // last name and only rus and big first symbol

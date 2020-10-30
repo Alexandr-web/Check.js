@@ -396,7 +396,7 @@ var Valval = /*#__PURE__*/function () {
 
 
             if (item === 'firstName' && options[item].onlyEn) {
-              _this2.regexp_first_name_only_en = eval("/^[a-z]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
+              _this2.regexp_first_name_only_en = eval("/^[A-Z|a-z]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
 
               _this2.validationElement(_this2.regexp_first_name_only_en, value, options[item]);
             } // First name and only en and big first symbol
@@ -410,7 +410,7 @@ var Valval = /*#__PURE__*/function () {
 
 
             if (item === 'firstName' && options[item].onlyRus) {
-              _this2.regexp_first_name_only_rus = eval("/^[\u0430-\u044F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
+              _this2.regexp_first_name_only_rus = eval("/^[\u0410-\u042F|\u0430-\u044F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
 
               _this2.validationElement(_this2.regexp_first_name_only_rus, value, options[item]);
             } // First name and only rus and big first symbol
@@ -436,7 +436,7 @@ var Valval = /*#__PURE__*/function () {
 
 
             if (item === 'lastName' && options[item].onlyEn) {
-              _this2.regexp_last_name_only_en = eval("/^[a-z]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
+              _this2.regexp_last_name_only_en = eval("/^[A-Z|a-z]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
 
               _this2.validationElement(_this2.regexp_last_name_only_en, value, options[item]);
             } // last name and only en and big first symbol
@@ -450,7 +450,7 @@ var Valval = /*#__PURE__*/function () {
 
 
             if (item === 'lastName' && options[item].onlyRus) {
-              _this2.regexp_last_name_only_rus = eval("/^[\u0430-\u044F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
+              _this2.regexp_last_name_only_rus = eval("/^[\u0410-\u042F|\u0430-\u044F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
 
               _this2.validationElement(_this2.regexp_last_name_only_rus, value, options[item]);
             } // last name and only rus and big first symbol
