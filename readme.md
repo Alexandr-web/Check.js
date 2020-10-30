@@ -1,6 +1,5 @@
 # What is it?
-This is a library for form validation
-	npm i valval --save
+This is a library for form validation ``` npm i valval --save ```
 
 ## Keys
 | Key | Explanation |
