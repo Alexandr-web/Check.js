@@ -1,5 +1,5 @@
 # What is it?
-This is a library for form validation
+This is a library for form validation.
 This library is under development only, so don't judge strictly)
 
 ## Keys
