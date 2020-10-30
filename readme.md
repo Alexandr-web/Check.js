@@ -1,10 +1,6 @@
 # What is it?
-<<<<<<< HEAD
 This is a library for form validation
 This library is under development only, so don't judge strictly)
-=======
-This is a library for form validation ``` npm i valval --save ```
->>>>>>> adfe55cb1734eb1972238040e4ff3b194ffe21e0
 
 ## Keys
 | Key | Explanation |
@@ -133,11 +129,7 @@ This is a library for form validation ``` npm i valval --save ```
     | textWhenValid | String | Element text after successful check | ``` textWhenValid: 'Successfully' ``` |
     | textWhenInvalid | String | Element text after unsuccessful check | ``` textWhenValid: 'Unsuccessfully' ``` |
 - Unique
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> adfe55cb1734eb1972238040e4ff3b194ffe21e0
     Options in ``` password ```
     | Option | Type | Value | Example |
     | ------ | ------ | ------ | ------ |
@@ -151,20 +143,12 @@ This is a library for form validation ``` npm i valval --save ```
     | ------ | ------ | ------ | ------ |
     | minLength | Number | Minimum number of characters per line (default 1) | ``` minLength: 6 ``` |
     | maxLength | Number | Maximum number of characters per line (infinity by default) | ``` maxLength: 6 ``` |
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> adfe55cb1734eb1972238040e4ff3b194ffe21e0
     Options in ``` repeatPassword ```
     | Option | Type | Value | Example |
     | ------ | ------ | ------ | ------ |
     | repeatAt | String | The element selector at which you want to repeat the password | ``` repeatAt: '.password' ``` |
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> adfe55cb1734eb1972238040e4ff3b194ffe21e0
     Options in ``` date ```
     | Option | Type | Value | Example |
     | ------ | ------ | ------ | ------ |
@@ -179,11 +163,7 @@ This is a library for form validation ``` npm i valval --save ```
     | ------ | ------ | ------ | ------ |
     | minLength | Number | Minimum number of characters per line (default 1) | ``` minLength: 6 ``` |
     | maxLength | Number | Maximum number of characters per line (infinity by default) | ``` maxLength: 6 ``` |
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> adfe55cb1734eb1972238040e4ff3b194ffe21e0
     Options in ``` firstName ``` and ``` lastName ```
     | Option | Type | Value | Example |
     | ------ | ------ | ------ | ------ |
@@ -196,7 +176,6 @@ This is a library for form validation ``` npm i valval --save ```
     | Option | Type | Value | Example |
     | ------ | ------ | ------ | ------ |
     | minLength | Number | Minimum number of characters per line (default 1) | ``` minLength: 6 ``` |
-<<<<<<< HEAD
     | maxLength | Number | Maximum number of characters per line (infinity by default) | ``` maxLength: 6 ``` |`
     
 ## Example of work
@@ -253,8 +232,6 @@ JavaScript Code
 
     new Valval().start(options);
 ```
-=======
-    | maxLength | Number | Maximum number of characters per line (infinity by default) | ``` maxLength: 6 ``` |
     
     ## Example of work
     
@@ -310,4 +287,3 @@ JavaScript Code
 
 	new Valval().start(options);
 	```
->>>>>>> adfe55cb1734eb1972238040e4ff3b194ffe21e0
