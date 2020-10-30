@@ -125,6 +125,7 @@
     | textWhenValid | String | Element text after successful check | ``` textWhenValid: 'Successfully' ``` |
     | textWhenInvalid | String | Element text after unsuccessful check | ``` textWhenValid: 'Unsuccessfully' ``` |
 - Unique
+    
     Options in ``` password ```
     | Option | Type | Value | Example |
     | ------ | ------ | ------ | ------ |
