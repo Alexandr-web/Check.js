@@ -214,7 +214,7 @@ JavaScript Code
         },
         firstName: {
             required: true,
-            bigFirstSumbol: true,
+            bigFirstSymbol: true,
             onlyEn: true,
             selectorEl: '.first-name',
             minLength: 2
