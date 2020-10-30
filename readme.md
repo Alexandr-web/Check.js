@@ -366,7 +366,7 @@ JavaScript Code
     Опции в ``` validationElement ```
     | Опция | Тип | Значени | Пример |
     | ------ | ------ | ------ | ------ |
-    | have | Boolean | Будет ли предмет для проверки | ``` have: true ``` |
+    | have | Boolean | Будет ли элемент для проверки | ``` have: true ``` |
     | classValid | String | Класс элемента после успешной проверки (по умолчанию стоит класс .valval-valid-el) | ``` classValid: 'valid-el' ``` |
     | classInvalid | String | Класс элемента после неудачной проверки (по умолчанию стоит класс .valval-invalid-el) | ``` classInvalid: 'invalid-el' ``` |
     | selectorEl | String | Селектор элемента | ``` selectorEl: '.validation-el' ``` |
