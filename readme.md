@@ -361,7 +361,7 @@ JavaScript Code
     | classValid | String | Класс элемента после успешной проверки (по умолчанию стоит класс .valval-valid) | ``` classValid: 'valid' ``` |
     | classInvalid | String | Класс элемента после неудачной проверки (по умолчанию стоит класс .valval-invalid) | ``` classInvalid: 'invalid' ``` |
     | selectorEl | String | Селектор элемента | ``` selectorEl: '.password' ``` |
-    >**Используйте классы или айди**
+    >**Используйте классы(class) или айди(id)**
 	
     Опции в ``` validationElement ```
     | Опция | Тип | Значени | Пример |
@@ -379,7 +379,7 @@ JavaScript Code
     | onlyRus | Boolean | Только русский язык (русский) | ``` onlyRus: true ``` |
     | onlyEn | Boolean | Только английский язык (english) | ``` onlyEn: true ``` |	
     | onlyNumbers | Boolean | Только цифры (123456) | ``` onlyNumbers: true ``` |	
-    >**Если все эти опции отключены (false), то по умолчанию 
+    >**Если все эти опции отключены (false), то по умолчанию**
     >**проверку пройдет любое значение в строке**
 	
     | Опция | Тип | Значение | Пример |
