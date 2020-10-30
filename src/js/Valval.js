@@ -1,4 +1,4 @@
-class Check {
+class Valval {
     constructor() {
         this.all_options = ['mail', 'date', 'password', 'tel', 'firstName', 'lastName', 'repeatPassword'];
         this.options = {};
@@ -64,12 +64,12 @@ class Check {
 
                 if (item.valid) {
                     validationEl.innerText = item.validationElement.textWhenValid;
-                    validationEl.classList.add(item.validationElement.classValid || 'check-valid-el');
-                    validationEl.classList.remove(item.validationElement.classInvalid || 'check-invalid-el');
+                    validationEl.classList.add(item.validationElement.classValid || 'valval-valid-el');
+                    validationEl.classList.remove(item.validationElement.classInvalid || 'valval-invalid-el');
                 } else {
                     validationEl.innerText = item.validationElement.textWhenInvalid;
-                    validationEl.classList.remove(item.validationElement.classValid || 'check-valid-el');
-                    validationEl.classList.add(item.validationElement.classInvalid || 'check-invalid-el');
+                    validationEl.classList.remove(item.validationElement.classValid || 'valval-valid-el');
+                    validationEl.classList.add(item.validationElement.classInvalid || 'valval-invalid-el');
                 }
             }
         }
@@ -120,9 +120,9 @@ class Check {
                 // Obj options
                 options[item].objOptions = options;
                 // Class invalid
-                options[item].classInvalid = options[item].classInvalid ? options[item].classInvalid : 'check-invalid';
+                options[item].classInvalid = options[item].classInvalid ? options[item].classInvalid : 'valval-invalid';
                 // Class valid
-                options[item].classValid = options[item].classValid ? options[item].classValid : 'check-valid';
+                options[item].classValid = options[item].classValid ? options[item].classValid : 'valval-valid';
                 // Valid
                 options[item].valid = options[item].required ? false : true;
                 // Required
@@ -207,6 +207,11 @@ class Check {
                                 this.regexp_repeat_password = eval(`/^${document.querySelector(options['repeatPassword'].repeatAt).value}$/`);
                                 this.validationElement(this.regexp_password_only_rus, value, options[item]);
                                 this.validationElement(this.regexp_repeat_password, document.querySelector(options['repeatPassword'].selectorEl).value, options['repeatPassword']);
+                            } else {
+                                options[item].valid = false;
+                                this.checkValid(options[item].classInvalid, options[item].classValid, options[item], options[item].element);
+                                this.checkValidationElement(options[item]);
+                                this.invalidSize = this.addInvalidElementsInArray(options[item]);
                             }
                         } else {
                             this.validationElement(this.regexp_password_only_rus, value, options[item]);
@@ -218,6 +223,11 @@ class Check {
                                 this.regexp_repeat_password = eval(`/^${document.querySelector(options['repeatPassword'].repeatAt).value}$/`);
                                 this.validationElement(this.regexp_password_only_numbers, value, options[item]);
                                 this.validationElement(this.regexp_repeat_password, document.querySelector(options['repeatPassword'].selectorEl).value, options['repeatPassword']);
+                            } else {
+                                options[item].valid = false;
+                                this.checkValid(options[item].classInvalid, options[item].classValid, options[item], options[item].element);
+                                this.checkValidationElement(options[item]);
+                                this.invalidSize = this.addInvalidElementsInArray(options[item]);
                             }
                         } else {
                             this.validationElement(this.regexp_password_only_numbers, value, options[item]);
@@ -229,6 +239,11 @@ class Check {
                                 this.regexp_repeat_password = eval(`/^${document.querySelector(options['repeatPassword'].repeatAt).value}$/`);
                                 this.validationElement(this.regexp_password_only_en, value, options[item]);
                                 this.validationElement(this.regexp_repeat_password, document.querySelector(options['repeatPassword'].selectorEl).value, options['repeatPassword']);
+                            } else {
+                                options[item].valid = false;
+                                this.checkValid(options[item].classInvalid, options[item].classValid, options[item], options[item].element);
+                                this.checkValidationElement(options[item]);
+                                this.invalidSize = this.addInvalidElementsInArray(options[item]);
                             }
                         } else {
                             this.validationElement(this.regexp_password_only_en, value, options[item]);
@@ -310,3 +325,5 @@ class Check {
         return this;
     }
 }
+
+module.exports.Valval = Valval;

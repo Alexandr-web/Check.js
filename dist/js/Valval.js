@@ -18,9 +18,9 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-var Check = /*#__PURE__*/function () {
-  function Check() {
-    _classCallCheck(this, Check);
+var Valval = /*#__PURE__*/function () {
+  function Valval() {
+    _classCallCheck(this, Valval);
 
     this.all_options = ['mail', 'date', 'password', 'tel', 'firstName', 'lastName', 'repeatPassword'];
     this.options = {};
@@ -45,7 +45,7 @@ var Check = /*#__PURE__*/function () {
     this.invalidSize = 0;
   }
 
-  _createClass(Check, [{
+  _createClass(Valval, [{
     key: "submitForm",
     value: function submitForm(item) {
       var _this = this;
@@ -98,12 +98,12 @@ var Check = /*#__PURE__*/function () {
 
           if (item.valid) {
             validationEl.innerText = item.validationElement.textWhenValid;
-            validationEl.classList.add(item.validationElement.classValid || 'check-valid-el');
-            validationEl.classList.remove(item.validationElement.classInvalid || 'check-invalid-el');
+            validationEl.classList.add(item.validationElement.classValid || 'valval-valid-el');
+            validationEl.classList.remove(item.validationElement.classInvalid || 'valval-invalid-el');
           } else {
             validationEl.innerText = item.validationElement.textWhenInvalid;
-            validationEl.classList.remove(item.validationElement.classValid || 'check-valid-el');
-            validationEl.classList.add(item.validationElement.classInvalid || 'check-invalid-el');
+            validationEl.classList.remove(item.validationElement.classValid || 'valval-valid-el');
+            validationEl.classList.add(item.validationElement.classInvalid || 'valval-invalid-el');
           }
         }
       }
@@ -166,9 +166,9 @@ var Check = /*#__PURE__*/function () {
 
           options[item].objOptions = options; // Class invalid
 
-          options[item].classInvalid = options[item].classInvalid ? options[item].classInvalid : 'check-invalid'; // Class valid
+          options[item].classInvalid = options[item].classInvalid ? options[item].classInvalid : 'valval-invalid'; // Class valid
 
-          options[item].classValid = options[item].classValid ? options[item].classValid : 'check-valid'; // Valid
+          options[item].classValid = options[item].classValid ? options[item].classValid : 'valval-valid'; // Valid
 
           options[item].valid = options[item].required ? false : true; // Required
 
@@ -263,6 +263,14 @@ var Check = /*#__PURE__*/function () {
                   _this2.validationElement(_this2.regexp_password_only_rus, value, options[item]);
 
                   _this2.validationElement(_this2.regexp_repeat_password, document.querySelector(options['repeatPassword'].selectorEl).value, options['repeatPassword']);
+                } else {
+                  options[item].valid = false;
+
+                  _this2.checkValid(options[item].classInvalid, options[item].classValid, options[item], options[item].element);
+
+                  _this2.checkValidationElement(options[item]);
+
+                  _this2.invalidSize = _this2.addInvalidElementsInArray(options[item]);
                 }
               } else {
                 _this2.validationElement(_this2.regexp_password_only_rus, value, options[item]);
@@ -277,6 +285,14 @@ var Check = /*#__PURE__*/function () {
                   _this2.validationElement(_this2.regexp_password_only_numbers, value, options[item]);
 
                   _this2.validationElement(_this2.regexp_repeat_password, document.querySelector(options['repeatPassword'].selectorEl).value, options['repeatPassword']);
+                } else {
+                  options[item].valid = false;
+
+                  _this2.checkValid(options[item].classInvalid, options[item].classValid, options[item], options[item].element);
+
+                  _this2.checkValidationElement(options[item]);
+
+                  _this2.invalidSize = _this2.addInvalidElementsInArray(options[item]);
                 }
               } else {
                 _this2.validationElement(_this2.regexp_password_only_numbers, value, options[item]);
@@ -291,6 +307,14 @@ var Check = /*#__PURE__*/function () {
                   _this2.validationElement(_this2.regexp_password_only_en, value, options[item]);
 
                   _this2.validationElement(_this2.regexp_repeat_password, document.querySelector(options['repeatPassword'].selectorEl).value, options['repeatPassword']);
+                } else {
+                  options[item].valid = false;
+
+                  _this2.checkValid(options[item].classInvalid, options[item].classValid, options[item], options[item].element);
+
+                  _this2.checkValidationElement(options[item]);
+
+                  _this2.invalidSize = _this2.addInvalidElementsInArray(options[item]);
                 }
               } else {
                 _this2.validationElement(_this2.regexp_password_only_en, value, options[item]);
@@ -394,5 +418,7 @@ var Check = /*#__PURE__*/function () {
     }
   }]);
 
-  return Check;
+  return Valval;
 }();
+
+module.exports.Valval = Valval;

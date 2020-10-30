@@ -1,21 +1,22 @@
 {
-  "name": "re.js",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@babel/core": "^7.12.3",
-    "@babel/preset-env": "^7.12.1",
-    "browser-sync": "^2.26.13",
-    "gulp": "^4.0.2",
-    "gulp-babel": "^8.0.0",
-    "gulp-concat": "^2.6.1",
-    "gulp-minify": "^3.1.0"
-  }
+    "name": "valval",
+    "version": "1.0.5",
+    "description": "Form validation library",
+    "main": "dist/js/index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "validation",
+        "valid",
+        "form",
+        "valval"
+    ],
+    "author": "Alexandr Yakovlev",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Alexandr-web/valval.js"
+    },
+    "license": "ISC",
+    "devDependencies": {}
 }
