@@ -174,3 +174,57 @@ This is a library for form validation ``` npm i valval --save ```
     | ------ | ------ | ------ | ------ |
     | minLength | Number | Minimum number of characters per line (default 1) | ``` minLength: 6 ``` |
     | maxLength | Number | Maximum number of characters per line (infinity by default) | ``` maxLength: 6 ``` |
+    
+    ## Example of work
+HTML Code
+```html
+    <form action="">
+        <input type="text" placeholder="First name" class="first-name">
+        <input type="text" placeholder="Email" class="email">
+        <input type="password" placeholder="Password" class="password">
+        <input type="password" placeholder="Repeat password" class="repeat-password">
+        <input type="submit" value="Submit">
+    </form>
+```
+CSS Code
+```css
+        .valval-invalid {
+            background-color: rgba(255, 0, 0, 0.3);
+        }
+        
+        .valval-valid {
+            background-color: rgba(0, 255, 0, 0.3);
+        }
+```
+JavaScript Code
+```javascript
+	import { Valval } from 'valval';
+
+	const options = {
+	    mail: {
+		required: true,
+		selectorEl: '.email'
+	    },
+	    firstName: {
+		required: true,
+		bigFirstSumbol: true,
+		onlyEn: true,
+		selectorEl: '.first-name',
+		minLength: 2
+	    },
+	    password: {
+		required: true,
+		selectorEl: '.password',
+		minLength: 6,
+		maxLength: 12,
+		onlyEn: true
+	    },
+	    repeatPassword: {
+		required: true,
+		selectorEl: '.repeat-password',
+		repeatAt: '.password'
+	    }
+	}
+
+	new Valval().start(options);
+```
