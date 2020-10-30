@@ -1,6 +1,8 @@
 # What is it?
 This is a library for form validation.
 This library is under development only, so don't judge strictly)
+
+## Download npm
 ``` npm install valval --save ```
 
 ## Keys
