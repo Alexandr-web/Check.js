@@ -1,5 +1,6 @@
 # What is it?
 This is a library for form validation
+
     ```javascript
 	npm i valval --save
     ```
