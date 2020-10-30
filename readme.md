@@ -1,5 +1,9 @@
-``` npm i valval --save ```
 # What is it?
+This is a library for form validation
+    ```javascript
+	npm i valval --save
+    ```
+
 ## Keys
 | Key | Explanation |
 | ------ | ------ |
@@ -139,10 +143,12 @@
     | ------ | ------ | ------ | ------ |
     | minLength | Number | Minimum number of characters per line (default 1) | ``` minLength: 6 ``` |
     | maxLength | Number | Maximum number of characters per line (infinity by default) | ``` maxLength: 6 ``` |
+    
     Options in ``` repeatPassword ```
     | Option | Type | Value | Example |
     | ------ | ------ | ------ | ------ |
     | repeatAt | String | The element selector at which you want to repeat the password | ``` repeatAt: '.password' ``` |
+    
     Options in ``` date ```
     | Option | Type | Value | Example |
     | ------ | ------ | ------ | ------ |
@@ -157,6 +163,7 @@
     | ------ | ------ | ------ | ------ |
     | minLength | Number | Minimum number of characters per line (default 1) | ``` minLength: 6 ``` |
     | maxLength | Number | Maximum number of characters per line (infinity by default) | ``` maxLength: 6 ``` |
+    
     Options in ``` firstName ``` and ``` lastName ```
     | Option | Type | Value | Example |
     | ------ | ------ | ------ | ------ |
