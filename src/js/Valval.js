@@ -110,7 +110,12 @@ class Valval {
                 // Prevent default
                 options[item].preventDefault = true;
                 // Element
-                options[item].element = el.className.includes(options[item].selectorEl.replace(/\./, '')) ? el : false;
+                if (el.className.includes(options[item].selectorEl.replace(/\./, '')) ||
+                    el.id.includes(options[item].selectorEl.replace(/\#/, ''))) {
+                    options[item].element = el;
+                } else {
+                    options[item].element = false;
+                }
                 // Form
                 options[item].form = options[item].element.form;
                 // Elements in form
