@@ -69,13 +69,13 @@ This is a library for form validation. This library is under development, so don
     | classInvalid | String | Element class after unsuccessful validation (the default class is .valval-invalid) | ``` classInvalid: 'invalid' ``` |
     | preventDefault | Boolean | To cancel page reload when sending data (default true) | ``` preventDefault: false ``` |
     | password | Boolean | For password | ``` password: true ``` |
-    | mail | Booelan | For email | ``` mail: true ``` |
+    | mail | Boolean | For email | ``` mail: true ``` |
     | message | Booelan | For message | ``` message: true ``` |
     | date | Boolean | For date | ``` date: true ``` |
     | tel | Boolean | For phone | ``` tel: true ``` |
     | repeatPassword | Boolean | For repeat password | ``` repeatPassword: true ``` |
-    | firstName | Booelan | For first name | ``` firstName: true ``` |
-    | lastName | Booelan | For last name | ``` lastName: true ``` |
+    | firstName | Boolean | For first name | ``` firstName: true ``` |
+    | lastName | Boolean | For last name | ``` lastName: true ``` |
 
     Options in ``` validationElement ```
     | Option | Type | Value | Example |
