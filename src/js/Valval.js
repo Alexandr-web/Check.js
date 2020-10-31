@@ -16,12 +16,9 @@ class Valval {
         this.regexp_date_only_slash = '';
         this.regexp_date_only_dot = '';
         this.regexp_date_only_hyphen = '';
-        this.regexp_first_name = '';
-        this.regexp_first_name_only_en = '';
-        this.regexp_first_name_only_rus = '';
-        this.regexp_last_name = '';
-        this.regexp_last_name_only_en = '';
-        this.regexp_last_name_only_rus = '';
+        this.regexp_name = '';
+        this.regexp_name_only_en = '';
+        this.regexp_name_only_rus = '';
         this.invalidSize = 0;
     }
     getOptions() {
@@ -47,10 +44,10 @@ class Valval {
             item.valid = false;
             this.checkValid(item);
             this.checkValidationElement(item);
-            this.invalidSize = this.addInvalidElementsInArray(item);
+            this.invalidSize = this.getInvalidElementsSize(item);
         }
     }
-    addInvalidElementsInArray(item) {
+    getInvalidElementsSize(item) {
         const set = new Set();
 
         for (let i in item.objOptions) {
@@ -81,12 +78,12 @@ class Valval {
             item.valid = true;
             this.checkValid(item);
             this.checkValidationElement(item);
-            this.invalidSize = this.addInvalidElementsInArray(item);
+            this.invalidSize = this.getInvalidElementsSize(item);
         } else {
             item.valid = false;
             this.checkValid(item);
             this.checkValidationElement(item);
-            this.invalidSize = this.addInvalidElementsInArray(item);
+            this.invalidSize = this.getInvalidElementsSize(item);
         }
     }
     checkValid(item) {
@@ -123,23 +120,11 @@ class Valval {
             if (options[item].tel) {
                 this.regexp_tel = eval(`/^\\d{${options[item].minLength},${options[item].maxLength}}$/`);
             }
-            // Regular expressions first name
-            if (options[item].firstName) {
-                this.regexp_first_name = eval(`/^[a-z|A-Z|а-я|А-Я]{${options[item].minLength},${options[item].maxLength}}$/`);
-                this.regexp_first_name_only_rus = eval(`/^[А-Я|а-я]{${options[item].minLength},${options[item].maxLength}}$/`);
-                this.regexp_first_name_only_en = eval(`/^[A-Z|a-z]{${options[item].minLength},${options[item].maxLength}}$/`);
-            }
-            // Regular expressions last name
-            if (options[item].lastName) {
-                this.regexp_last_name = eval(`/^[a-z|A-Z|а-я|А-Я]{${options[item].minLength},${options[item].maxLength}}$/`);
-                this.regexp_last_name_only_rus = eval(`/^[А-Я|а-я]{${options[item].minLength},${options[item].maxLength}}$/`);
-                this.regexp_last_name_only_en = eval(`/^[A-Z|a-z]{${options[item].minLength},${options[item].maxLength}}$/`);
-            }
-            // Regular expressions message
-            if (options[item].message) {
-                // this.regexp_message = eval(`/[a-z|A-Z|а-я|А-Я]{${options[item].minLength},${options[item].maxLength}}/`);
-                // this.regexp_message_only_rus = eval(`/[а-я|А-Я]{${options[item].minLength},${options[item].maxLength}}/`);
-                // this.regexp_message_only_en = eval(`/[a-z|A-Z]{${options[item].minLength},${options[item].maxLength}}/`);
+            // Regular expressions name
+            if (options[item].name) {
+                this.regexp_name = eval(`/^[a-z|A-Z|а-я|А-Я]{${options[item].minLength},${options[item].maxLength}}$/`);
+                this.regexp_name_only_rus = eval(`/^[А-Я|а-я]{${options[item].minLength},${options[item].maxLength}}$/`);
+                this.regexp_name_only_en = eval(`/^[A-Z|a-z]{${options[item].minLength},${options[item].maxLength}}$/`);
             }
             // Regular expressions required
             this.regexp_required = /.{1,}/;
@@ -265,12 +250,12 @@ class Valval {
                                     options[item].valid = false;
                                     this.checkValid(options[item]);
                                     this.checkValidationElement(options[item]);
-                                    this.invalidSize = this.addInvalidElementsInArray(options[item]);
+                                    this.invalidSize = this.getInvalidElementsSize(options[item]);
 
                                     options[item].objOptions[i].valid = false;
                                     this.checkValid(options[item].objOptions[i]);
                                     this.checkValidationElement(options[item].objOptions[i]);
-                                    this.invalidSize = this.addInvalidElementsInArray(options[item].objOptions[i]);
+                                    this.invalidSize = this.getInvalidElementsSize(options[item].objOptions[i]);
                                 } else {
                                     this.regexp_repeat_password = eval(`/^${options[item].objOptions[i].element.value}$/`);
                                     this.validationElement(this.regexp_repeat_password, value, options[item]);
@@ -278,68 +263,37 @@ class Valval {
                             }
                         }
                     }
-                    // First name
-                    if (options[item].firstName &&
+                    // name
+                    if (options[item].name &&
                         !options[item].onlyRus &&
                         !options[item].onlyEn &&
                         !options[item].bigFirstSymbol) {
-                        this.validationElement(this.regexp_first_name, value, options[item]);
+                        this.validationElement(this.regexp_name, value, options[item]);
                     }
-                    // First name and big first symbol
-                    if (options[item].firstName && options[item].bigFirstSymbol) {
-                        this.regexp_first_name = eval(`/^[A-Z|А-Я]{1,1}[a-z|а-я]{${options[item].minLength},${options[item].maxLength}}$/`);
-                        this.validationElement(this.regexp_first_name, value, options[item]);
+                    // name and big first symbol
+                    if (options[item].name && options[item].bigFirstSymbol) {
+                        this.regexp_name = eval(`/^[A-Z|А-Я]{1,1}[a-z|а-я]{${options[item].minLength},${options[item].maxLength}}$/`);
+                        this.validationElement(this.regexp_name, value, options[item]);
                     }
-                    // First name and only en
-                    if (options[item].firstName && options[item].onlyEn) {
-                        this.regexp_first_name_only_en = eval(`/^[a-z]{${options[item].minLength},${options[item].maxLength}}$/`);
-                        this.validationElement(this.regexp_first_name_only_en, value, options[item]);
+                    // name and only en
+                    if (options[item].name && options[item].onlyEn) {
+                        this.regexp_name_only_en = eval(`/^[a-z]{${options[item].minLength},${options[item].maxLength}}$/`);
+                        this.validationElement(this.regexp_name_only_en, value, options[item]);
                     }
-                    // First name and only en and big first symbol
-                    if (options[item].firstName && options[item].onlyEn && options[item].bigFirstSymbol) {
+                    // name and only en and big first symbol
+                    if (options[item].name && options[item].onlyEn && options[item].bigFirstSymbol) {
                         this.regexp_first_name_only_en = eval(`/^[A-Z]{1,1}[a-z]{${options[item].minLength},${options[item].maxLength}}$/`);
                         this.validationElement(this.regexp_first_name_only_en, value, options[item]);
                     }
-                    // First name and only rus
-                    if (options[item].firstName && options[item].onlyRus) {
-                        this.regexp_first_name_only_rus = eval(`/^[а-я]{${options[item].minLength},${options[item].maxLength}}$/`);
-                        this.validationElement(this.regexp_first_name_only_rus, value, options[item]);
+                    // name and only rus
+                    if (options[item].name && options[item].onlyRus) {
+                        this.regexp_name_only_rus = eval(`/^[а-я]{${options[item].minLength},${options[item].maxLength}}$/`);
+                        this.validationElement(this.regexp_name_only_rus, value, options[item]);
                     }
-                    // First name and only rus and big first symbol
-                    if (options[item].firstName && options[item].onlyRus && options[item].bigFirstSymbol) {
-                        this.regexp_first_name_only_rus = eval(`/^[А-Я]{1,1}[а-я]{${options[item].minLength},${options[item].maxLength}}$/`);
-                        this.validationElement(this.regexp_first_name_only_rus, value, options[item]);
-                    }
-                    // last name
-                    if (options[item].lastName &&
-                        !options[item].onlyRus &&
-                        !options[item].onlyEn) {
-                        this.validationElement(this.regexp_last_name, value, options[item]);
-                    }
-                    // last name and big first symbol
-                    if (options[item].lastName && options[item].bigFirstSymbol) {
-                        this.regexp_last_name = eval(`/^[A-Z|А-Я]{1,1}[a-z|а-я]{${options[item].minLength},${options[item].maxLength}}$/`);
-                        this.validationElement(this.regexp_last_name, value, options[item]);
-                    }
-                    // last name and only en
-                    if (options[item].lastName && options[item].onlyEn) {
-                        this.regexp_last_name_only_en = eval(`/^[a-z]{${options[item].minLength},${options[item].maxLength}}$/`);
-                        this.validationElement(this.regexp_last_name_only_en, value, options[item]);
-                    }
-                    // last name and only en and big first symbol
-                    if (options[item].lastName && options[item].onlyEn && options[item].bigFirstSymbol) {
-                        this.regexp_last_name_only_en = eval(`/^[A-Z]{1,1}[a-z]{${options[item].minLength},${options[item].maxLength}}$/`);
-                        this.validationElement(this.regexp_last_name_only_en, value, options[item]);
-                    }
-                    // last name and only rus
-                    if (options[item].lastName && options[item].onlyRus) {
-                        this.regexp_last_name_only_rus = eval(`/^[а-я]{${options[item].minLength},${options[item].maxLength}}$/`);
-                        this.validationElement(this.regexp_last_name_only_rus, value, options[item]);
-                    }
-                    // last name and only rus and big first symbol
-                    if (options[item].lastName && options[item].onlyRus && options[item].bigFirstSymbol) {
-                        this.regexp_last_name_only_rus = eval(`/^[А-Я]{1,1}[а-я]{${options[item].minLength},${options[item].maxLength}}$/`);
-                        this.validationElement(this.regexp_last_name_only_rus, value, options[item]);
+                    // name and only rus and big first symbol
+                    if (options[item].name && options[item].onlyRus && options[item].bigFirstSymbol) {
+                        this.regexp_name_only_rus = eval(`/^[А-Я]{1,1}[а-я]{${options[item].minLength},${options[item].maxLength}}$/`);
+                        this.validationElement(this.regexp_name_only_rus, value, options[item]);
                     }
                     // message
                     if (options[item].message) {
@@ -348,24 +302,24 @@ class Valval {
                                 options[item].valid = true;
                                 this.checkValid(options[item]);
                                 this.checkValidationElement(options[item]);
-                                this.invalidSize = this.addInvalidElementsInArray(options[item]);
+                                this.invalidSize = this.getInvalidElementsSize(options[item]);
                             } else {
                                 options[item].valid = false;
                                 this.checkValid(options[item]);
                                 this.checkValidationElement(options[item]);
-                                this.invalidSize = this.addInvalidElementsInArray(options[item]);
+                                this.invalidSize = this.getInvalidElementsSize(options[item]);
                             }
                         } else {
                             if (value.length >= options[item].minLength) {
                                 options[item].valid = true;
                                 this.checkValid(options[item]);
                                 this.checkValidationElement(options[item]);
-                                this.invalidSize = this.addInvalidElementsInArray(options[item]);
+                                this.invalidSize = this.getInvalidElementsSize(options[item]);
                             } else {
                                 options[item].valid = false;
                                 this.checkValid(options[item]);
                                 this.checkValidationElement(options[item]);
-                                this.invalidSize = this.addInvalidElementsInArray(options[item]);
+                                this.invalidSize = this.getInvalidElementsSize(options[item]);
                             }
                         }
                     }
@@ -379,13 +333,13 @@ class Valval {
                                     options[item].valid = false;
                                     this.checkValid(options[item]);
                                     this.checkValidationElement(options[item]);
-                                    this.invalidSize = this.addInvalidElementsInArray(options[item]);
+                                    this.invalidSize = this.getInvalidElementsSize(options[item]);
                                 }
 
                                 options[item].objOptions[i].valid = false;
                                 this.checkValid(options[item].objOptions[i]);
                                 this.checkValidationElement(options[item].objOptions[i]);
-                                this.invalidSize = this.addInvalidElementsInArray(options[item].objOptions[i]);
+                                this.invalidSize = this.getInvalidElementsSize(options[item].objOptions[i]);
                             } else {
                                 if (options[item].repeatPassword) {
                                     this.regexp_repeat_password = eval(`/^${options[item].objOptions[i].element.value}$/`);

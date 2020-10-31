@@ -40,12 +40,9 @@ var Valval = /*#__PURE__*/function () {
     this.regexp_date_only_slash = '';
     this.regexp_date_only_dot = '';
     this.regexp_date_only_hyphen = '';
-    this.regexp_first_name = '';
-    this.regexp_first_name_only_en = '';
-    this.regexp_first_name_only_rus = '';
-    this.regexp_last_name = '';
-    this.regexp_last_name_only_en = '';
-    this.regexp_last_name_only_rus = '';
+    this.regexp_name = '';
+    this.regexp_name_only_en = '';
+    this.regexp_name_only_rus = '';
     this.invalidSize = 0;
   }
 
@@ -79,12 +76,12 @@ var Valval = /*#__PURE__*/function () {
         item.valid = false;
         this.checkValid(item);
         this.checkValidationElement(item);
-        this.invalidSize = this.addInvalidElementsInArray(item);
+        this.invalidSize = this.getInvalidElementsSize(item);
       }
     }
   }, {
-    key: "addInvalidElementsInArray",
-    value: function addInvalidElementsInArray(item) {
+    key: "getInvalidElementsSize",
+    value: function getInvalidElementsSize(item) {
       var set = new Set();
 
       for (var i in item.objOptions) {
@@ -119,12 +116,12 @@ var Valval = /*#__PURE__*/function () {
         item.valid = true;
         this.checkValid(item);
         this.checkValidationElement(item);
-        this.invalidSize = this.addInvalidElementsInArray(item);
+        this.invalidSize = this.getInvalidElementsSize(item);
       } else {
         item.valid = false;
         this.checkValid(item);
         this.checkValidationElement(item);
-        this.invalidSize = this.addInvalidElementsInArray(item);
+        this.invalidSize = this.getInvalidElementsSize(item);
       }
     }
   }, {
@@ -167,26 +164,13 @@ var Valval = /*#__PURE__*/function () {
 
         if (options[item].tel) {
           this.regexp_tel = eval("/^\\d{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
-        } // Regular expressions first name
+        } // Regular expressions name
 
 
-        if (options[item].firstName) {
-          this.regexp_first_name = eval("/^[a-z|A-Z|\u0430-\u044F|\u0410-\u042F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
-          this.regexp_first_name_only_rus = eval("/^[\u0410-\u042F|\u0430-\u044F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
-          this.regexp_first_name_only_en = eval("/^[A-Z|a-z]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
-        } // Regular expressions last name
-
-
-        if (options[item].lastName) {
-          this.regexp_last_name = eval("/^[a-z|A-Z|\u0430-\u044F|\u0410-\u042F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
-          this.regexp_last_name_only_rus = eval("/^[\u0410-\u042F|\u0430-\u044F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
-          this.regexp_last_name_only_en = eval("/^[A-Z|a-z]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
-        } // Regular expressions message
-
-
-        if (options[item].message) {// this.regexp_message = eval(`/[a-z|A-Z|а-я|А-Я]{${options[item].minLength},${options[item].maxLength}}/`);
-          // this.regexp_message_only_rus = eval(`/[а-я|А-Я]{${options[item].minLength},${options[item].maxLength}}/`);
-          // this.regexp_message_only_en = eval(`/[a-z|A-Z]{${options[item].minLength},${options[item].maxLength}}/`);
+        if (options[item].name) {
+          this.regexp_name = eval("/^[a-z|A-Z|\u0430-\u044F|\u0410-\u042F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
+          this.regexp_name_only_rus = eval("/^[\u0410-\u042F|\u0430-\u044F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
+          this.regexp_name_only_en = eval("/^[A-Z|a-z]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
         } // Regular expressions required
 
 
@@ -333,14 +317,14 @@ var Valval = /*#__PURE__*/function () {
 
                     _this2.checkValidationElement(options[item]);
 
-                    _this2.invalidSize = _this2.addInvalidElementsInArray(options[item]);
+                    _this2.invalidSize = _this2.getInvalidElementsSize(options[item]);
                     options[item].objOptions[i].valid = false;
 
                     _this2.checkValid(options[item].objOptions[i]);
 
                     _this2.checkValidationElement(options[item].objOptions[i]);
 
-                    _this2.invalidSize = _this2.addInvalidElementsInArray(options[item].objOptions[i]);
+                    _this2.invalidSize = _this2.getInvalidElementsSize(options[item].objOptions[i]);
                   } else {
                     _this2.regexp_repeat_password = eval("/^".concat(options[item].objOptions[i].element.value, "$/"));
 
@@ -348,86 +332,46 @@ var Valval = /*#__PURE__*/function () {
                   }
                 }
               }
-            } // First name
+            } // name
 
 
-            if (options[item].firstName && !options[item].onlyRus && !options[item].onlyEn && !options[item].bigFirstSymbol) {
-              _this2.validationElement(_this2.regexp_first_name, value, options[item]);
-            } // First name and big first symbol
+            if (options[item].name && !options[item].onlyRus && !options[item].onlyEn && !options[item].bigFirstSymbol) {
+              _this2.validationElement(_this2.regexp_name, value, options[item]);
+            } // name and big first symbol
 
 
-            if (options[item].firstName && options[item].bigFirstSymbol) {
-              _this2.regexp_first_name = eval("/^[A-Z|\u0410-\u042F]{1,1}[a-z|\u0430-\u044F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
+            if (options[item].name && options[item].bigFirstSymbol) {
+              _this2.regexp_name = eval("/^[A-Z|\u0410-\u042F]{1,1}[a-z|\u0430-\u044F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
 
-              _this2.validationElement(_this2.regexp_first_name, value, options[item]);
-            } // First name and only en
-
-
-            if (options[item].firstName && options[item].onlyEn) {
-              _this2.regexp_first_name_only_en = eval("/^[a-z]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
-
-              _this2.validationElement(_this2.regexp_first_name_only_en, value, options[item]);
-            } // First name and only en and big first symbol
+              _this2.validationElement(_this2.regexp_name, value, options[item]);
+            } // name and only en
 
 
-            if (options[item].firstName && options[item].onlyEn && options[item].bigFirstSymbol) {
+            if (options[item].name && options[item].onlyEn) {
+              _this2.regexp_name_only_en = eval("/^[a-z]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
+
+              _this2.validationElement(_this2.regexp_name_only_en, value, options[item]);
+            } // name and only en and big first symbol
+
+
+            if (options[item].name && options[item].onlyEn && options[item].bigFirstSymbol) {
               _this2.regexp_first_name_only_en = eval("/^[A-Z]{1,1}[a-z]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
 
               _this2.validationElement(_this2.regexp_first_name_only_en, value, options[item]);
-            } // First name and only rus
+            } // name and only rus
 
 
-            if (options[item].firstName && options[item].onlyRus) {
-              _this2.regexp_first_name_only_rus = eval("/^[\u0430-\u044F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
+            if (options[item].name && options[item].onlyRus) {
+              _this2.regexp_name_only_rus = eval("/^[\u0430-\u044F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
 
-              _this2.validationElement(_this2.regexp_first_name_only_rus, value, options[item]);
-            } // First name and only rus and big first symbol
-
-
-            if (options[item].firstName && options[item].onlyRus && options[item].bigFirstSymbol) {
-              _this2.regexp_first_name_only_rus = eval("/^[\u0410-\u042F]{1,1}[\u0430-\u044F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
-
-              _this2.validationElement(_this2.regexp_first_name_only_rus, value, options[item]);
-            } // last name
+              _this2.validationElement(_this2.regexp_name_only_rus, value, options[item]);
+            } // name and only rus and big first symbol
 
 
-            if (options[item].lastName && !options[item].onlyRus && !options[item].onlyEn) {
-              _this2.validationElement(_this2.regexp_last_name, value, options[item]);
-            } // last name and big first symbol
+            if (options[item].name && options[item].onlyRus && options[item].bigFirstSymbol) {
+              _this2.regexp_name_only_rus = eval("/^[\u0410-\u042F]{1,1}[\u0430-\u044F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
 
-
-            if (options[item].lastName && options[item].bigFirstSymbol) {
-              _this2.regexp_last_name = eval("/^[A-Z|\u0410-\u042F]{1,1}[a-z|\u0430-\u044F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
-
-              _this2.validationElement(_this2.regexp_last_name, value, options[item]);
-            } // last name and only en
-
-
-            if (options[item].lastName && options[item].onlyEn) {
-              _this2.regexp_last_name_only_en = eval("/^[a-z]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
-
-              _this2.validationElement(_this2.regexp_last_name_only_en, value, options[item]);
-            } // last name and only en and big first symbol
-
-
-            if (options[item].lastName && options[item].onlyEn && options[item].bigFirstSymbol) {
-              _this2.regexp_last_name_only_en = eval("/^[A-Z]{1,1}[a-z]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
-
-              _this2.validationElement(_this2.regexp_last_name_only_en, value, options[item]);
-            } // last name and only rus
-
-
-            if (options[item].lastName && options[item].onlyRus) {
-              _this2.regexp_last_name_only_rus = eval("/^[\u0430-\u044F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
-
-              _this2.validationElement(_this2.regexp_last_name_only_rus, value, options[item]);
-            } // last name and only rus and big first symbol
-
-
-            if (options[item].lastName && options[item].onlyRus && options[item].bigFirstSymbol) {
-              _this2.regexp_last_name_only_rus = eval("/^[\u0410-\u042F]{1,1}[\u0430-\u044F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
-
-              _this2.validationElement(_this2.regexp_last_name_only_rus, value, options[item]);
+              _this2.validationElement(_this2.regexp_name_only_rus, value, options[item]);
             } // message
 
 
@@ -440,7 +384,7 @@ var Valval = /*#__PURE__*/function () {
 
                   _this2.checkValidationElement(options[item]);
 
-                  _this2.invalidSize = _this2.addInvalidElementsInArray(options[item]);
+                  _this2.invalidSize = _this2.getInvalidElementsSize(options[item]);
                 } else {
                   options[item].valid = false;
 
@@ -448,7 +392,7 @@ var Valval = /*#__PURE__*/function () {
 
                   _this2.checkValidationElement(options[item]);
 
-                  _this2.invalidSize = _this2.addInvalidElementsInArray(options[item]);
+                  _this2.invalidSize = _this2.getInvalidElementsSize(options[item]);
                 }
               } else {
                 if (value.length >= options[item].minLength) {
@@ -458,7 +402,7 @@ var Valval = /*#__PURE__*/function () {
 
                   _this2.checkValidationElement(options[item]);
 
-                  _this2.invalidSize = _this2.addInvalidElementsInArray(options[item]);
+                  _this2.invalidSize = _this2.getInvalidElementsSize(options[item]);
                 } else {
                   options[item].valid = false;
 
@@ -466,7 +410,7 @@ var Valval = /*#__PURE__*/function () {
 
                   _this2.checkValidationElement(options[item]);
 
-                  _this2.invalidSize = _this2.addInvalidElementsInArray(options[item]);
+                  _this2.invalidSize = _this2.getInvalidElementsSize(options[item]);
                 }
               }
             }
@@ -483,7 +427,7 @@ var Valval = /*#__PURE__*/function () {
 
                     _this2.checkValidationElement(options[item]);
 
-                    _this2.invalidSize = _this2.addInvalidElementsInArray(options[item]);
+                    _this2.invalidSize = _this2.getInvalidElementsSize(options[item]);
                   }
 
                   options[item].objOptions[i].valid = false;
@@ -492,7 +436,7 @@ var Valval = /*#__PURE__*/function () {
 
                   _this2.checkValidationElement(options[item].objOptions[i]);
 
-                  _this2.invalidSize = _this2.addInvalidElementsInArray(options[item].objOptions[i]);
+                  _this2.invalidSize = _this2.getInvalidElementsSize(options[item].objOptions[i]);
                 } else {
                   if (options[item].repeatPassword) {
                     _this2.regexp_repeat_password = eval("/^".concat(options[item].objOptions[i].element.value, "$/"));
