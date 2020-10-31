@@ -32,7 +32,7 @@ This is a library for form validation. This library is under development, so don
             firstName: {
             // Indicate params
                 required: true,
-                firstName: true,
+                name: true,
                 classValid: 'valid',
                 classInvalid: 'invalid',
                 onlyEn: true
@@ -61,6 +61,7 @@ This is a library for form validation. This library is under development, so don
 ```
 ## Options
 - **General**
+
     | Option | Type | Value | Example |
     | ------ | ------ | ------ | ------ |
     | required | Boolean | Required input field | ``` required: true  ``` |
@@ -74,8 +75,7 @@ This is a library for form validation. This library is under development, so don
     | date | Boolean | For date | ``` date: true ``` |
     | tel | Boolean | For phone | ``` tel: true ``` |
     | repeatPassword | Boolean | For repeat password | ``` repeatPassword: true ``` |
-    | firstName | Boolean | For first name | ``` firstName: true ``` |
-    | lastName | Boolean | For last name | ``` lastName: true ``` |
+    | name | Boolean | For name | ``` name: true ``` |
 
     Options in ``` validationElement ```
     | Option | Type | Value | Example |
@@ -122,7 +122,7 @@ This is a library for form validation. This library is under development, so don
     | minLength | Number | Minimum number of characters per line (default 1) | ``` minLength: 6 ``` |
     | maxLength | Number | Maximum number of characters per line (infinity by default) | ``` maxLength: 6 ``` |
     
-    Options in ``` firstName ``` and ``` lastName ```
+    Options in ``` name ```
     | Option | Type | Value | Example |
     | ------ | ------ | ------ | ------ |
     | onlyEn | Boolean | Only english language (english) | ``` onlyEn: true ``` |
