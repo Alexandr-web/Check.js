@@ -1,5 +1,7 @@
 "use strict";
 
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -22,8 +24,10 @@ var Valval = /*#__PURE__*/function () {
   function Valval() {
     _classCallCheck(this, Valval);
 
-    this.all_options = ['mail', 'date', 'password', 'tel', 'firstName', 'lastName', 'repeatPassword'];
     this.options = {};
+    this.regexp_message = '';
+    this.regexp_message_only_rus = '';
+    this.regexp_message_only_en = '';
     this.regexp_password = '';
     this.regexp_password_only_rus = '';
     this.regexp_password_only_numbers = '';
@@ -46,6 +50,11 @@ var Valval = /*#__PURE__*/function () {
   }
 
   _createClass(Valval, [{
+    key: "getOptions",
+    value: function getOptions() {
+      return this.options;
+    }
+  }, {
     key: "submitForm",
     value: function submitForm(item) {
       var _this = this;
@@ -68,15 +77,10 @@ var Valval = /*#__PURE__*/function () {
     value: function checkRequired(item) {
       if (!this.regexp_required.test(item.element.value)) {
         item.valid = false;
-        this.checkValid(item.classInvalid, item.classValid, item, item.element);
+        this.checkValid(item);
         this.checkValidationElement(item);
         this.invalidSize = this.addInvalidElementsInArray(item);
       }
-    }
-  }, {
-    key: "getOptions",
-    value: function getOptions() {
-      return this.options;
     }
   }, {
     key: "addInvalidElementsInArray",
@@ -92,19 +96,17 @@ var Valval = /*#__PURE__*/function () {
   }, {
     key: "checkValidationElement",
     value: function checkValidationElement(item) {
-      if (item.validationElement) {
-        if (item.validationElement.have) {
-          var validationEl = document.querySelector(item.validationElement.selectorEl);
+      if (item.validationElement && item.validationElement.have) {
+        var validationEl = document.querySelector(item.validationElement.selectorEl);
 
-          if (item.valid) {
-            validationEl.innerText = item.validationElement.textWhenValid;
-            validationEl.classList.add(item.validationElement.classValid || 'valval-valid-el');
-            validationEl.classList.remove(item.validationElement.classInvalid || 'valval-invalid-el');
-          } else {
-            validationEl.innerText = item.validationElement.textWhenInvalid;
-            validationEl.classList.remove(item.validationElement.classValid || 'valval-valid-el');
-            validationEl.classList.add(item.validationElement.classInvalid || 'valval-invalid-el');
-          }
+        if (item.valid) {
+          validationEl.innerText = item.validationElement.textWhenValid;
+          validationEl.classList.add(item.validationElement.classValid || 'valval-valid-el');
+          validationEl.classList.remove(item.validationElement.classInvalid || 'valval-invalid-el');
+        } else {
+          validationEl.innerText = item.validationElement.textWhenInvalid;
+          validationEl.classList.remove(item.validationElement.classValid || 'valval-valid-el');
+          validationEl.classList.add(item.validationElement.classInvalid || 'valval-invalid-el');
         }
       }
     }
@@ -115,360 +117,403 @@ var Valval = /*#__PURE__*/function () {
 
       if (regexp.test(value)) {
         item.valid = true;
-        this.checkValid(item.classInvalid, item.classValid, item, item.element);
+        this.checkValid(item);
         this.checkValidationElement(item);
         this.invalidSize = this.addInvalidElementsInArray(item);
       } else {
         item.valid = false;
-        this.checkValid(item.classInvalid, item.classValid, item, item.element);
+        this.checkValid(item);
         this.checkValidationElement(item);
         this.invalidSize = this.addInvalidElementsInArray(item);
       }
     }
   }, {
     key: "checkValid",
-    value: function checkValid(invalidClass, validClass, item, el) {
-      console.log();
-
+    value: function checkValid(item) {
       if (item.valid) {
-        el.classList.add(validClass);
-        el.classList.remove(invalidClass);
+        item.element.classList.add(item.classValid);
+        item.element.classList.remove(item.classInvalid);
       } else {
-        el.classList.remove(validClass);
-        el.classList.add(invalidClass);
+        item.element.classList.remove(item.classValid);
+        item.element.classList.add(item.classInvalid);
+      }
+    }
+  }, {
+    key: "getRegularExpressions",
+    value: function getRegularExpressions(options) {
+      // Start regular expressions
+      for (var item in options) {
+        // Regular expressions password
+        if (options[item].password) {
+          this.regexp_password = eval("/^.{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
+          this.regexp_password_only_rus = eval("/^[\u0410-\u042F|\u0430-\u044F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
+          this.regexp_password_only_numbers = eval("/^\\d{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
+          this.regexp_password_only_en = eval("/^[A-Z|a-z]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
+        } // Regular expressions mail
+
+
+        if (options[item].mail) {
+          this.regexp_mail = /^[A-Z|a-z|\d|\_|\-|\.]{1,}@[A-Z|a-z]{1,}\.[A-Z|a-z]{1,}$/;
+        } // Regular expressions date
+
+
+        if (options[item].date) {
+          this.regexp_date = /^(\d{2,2}[\/|\.|\-]){2,2}\d{4,4}$/;
+          this.regexp_date_only_slash = /^(\d{2,2}\/){2,2}\d{4,4}$/;
+          this.regexp_date_only_dot = /^(\d{2,2}\.){2,2}\d{4,4}$/;
+          this.regexp_date_only_hyphen = /^(\d{2,2}\-){2,2}\d{4,4}$/;
+        } // Regular expressions tel
+
+
+        if (options[item].tel) {
+          this.regexp_tel = eval("/^\\d{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
+        } // Regular expressions first name
+
+
+        if (options[item].firstName) {
+          this.regexp_first_name = eval("/^[a-z|A-Z|\u0430-\u044F|\u0410-\u042F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
+          this.regexp_first_name_only_rus = eval("/^[\u0410-\u042F|\u0430-\u044F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
+          this.regexp_first_name_only_en = eval("/^[A-Z|a-z]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
+        } // Regular expressions last name
+
+
+        if (options[item].lastName) {
+          this.regexp_last_name = eval("/^[a-z|A-Z|\u0430-\u044F|\u0410-\u042F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
+          this.regexp_last_name_only_rus = eval("/^[\u0410-\u042F|\u0430-\u044F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
+          this.regexp_last_name_only_en = eval("/^[A-Z|a-z]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
+        } // Regular expressions message
+
+
+        if (options[item].message) {// this.regexp_message = eval(`/[a-z|A-Z|а-я|А-Я]{${options[item].minLength},${options[item].maxLength}}/`);
+          // this.regexp_message_only_rus = eval(`/[а-я|А-Я]{${options[item].minLength},${options[item].maxLength}}/`);
+          // this.regexp_message_only_en = eval(`/[a-z|A-Z]{${options[item].minLength},${options[item].maxLength}}/`);
+        } // Regular expressions required
+
+
+        this.regexp_required = /.{1,}/;
+      } // End regular expressions
+
+    }
+  }, {
+    key: "getDefaultParams",
+    value: function getDefaultParams(options) {
+      for (var item in options) {
+        // Start default params
+        // Prevent default
+        options[item].preventDefault = true; // Element
+
+        options[item].element = document.querySelector("[data-valval=\"".concat(item, "\"]")); // Form
+
+        options[item].form = options[item].element.form; // Elements in form
+
+        options[item].elementsInForm = _toConsumableArray(options[item].element.form.elements).filter(function (item) {
+          return item.type !== 'submit';
+        }); // Submit
+
+        options[item].submit = _toConsumableArray(options[item].element.form.elements).find(function (item) {
+          return item.type === 'submit';
+        }); // Obj options
+
+        options[item].objOptions = options; // Class invalid
+
+        options[item].classInvalid = options[item].classInvalid ? options[item].classInvalid : 'valval-invalid'; // Class valid
+
+        options[item].classValid = options[item].classValid ? options[item].classValid : 'valval-valid'; // Valid
+
+        options[item].valid = options[item].required ? false : true; // Required
+
+        options[item].required = options[item].required ? options[item].required : false;
+
+        if (!options[item].date && !options[item].mail && !options[item].repeatPassword) {
+          // Min length
+          options[item].minLength = options[item].minLength ? options[item].minLength : 1; // Max length
+
+          options[item].maxLength = options[item].maxLength ? options[item].maxLength : '';
+        }
+      }
+    }
+  }, {
+    key: "getSizeOptions",
+    value: function getSizeOptions(options) {
+      for (var item in options) {
+        var set = new Set();
+
+        for (var i in options[item].objOptions) {
+          set.add(i);
+        }
+
+        this.invalidSize = set.size;
       }
     }
   }, {
     key: "start",
-    value: function start() {
+    value: function start(options) {
       var _this2 = this;
 
-      var options = arguments[0];
+      if (_typeof(options) === 'object') {
+        // Default params
+        this.getDefaultParams(options); // Size options
 
-      var _loop = function _loop(item) {
-        if (_this2.all_options.includes(item)) {
-          var el = document.querySelector(options[item].selectorEl); // Default params
-          // Prevent default
+        this.getSizeOptions(options); // Regular expressions
 
-          options[item].preventDefault = true; // Element
+        this.getRegularExpressions(options);
+        this.options = options;
 
-          if (el.className.includes(options[item].selectorEl.replace(/\./, '')) || el.id.includes(options[item].selectorEl.replace(/\#/, ''))) {
-            options[item].element = el;
-          } else {
-            options[item].element = false;
-          } // Form
-
-
-          options[item].form = options[item].element.form; // Elements in form
-
-          options[item].elementsInForm = _toConsumableArray(options[item].element.form.elements).filter(function (item) {
-            return item.type !== 'submit';
-          }); // Submit
-
-          options[item].submit = _toConsumableArray(options[item].element.form.elements).find(function (item) {
-            return item.type === 'submit';
-          }); // Obj options
-
-          options[item].objOptions = options; // Class invalid
-
-          options[item].classInvalid = options[item].classInvalid ? options[item].classInvalid : 'valval-invalid'; // Class valid
-
-          options[item].classValid = options[item].classValid ? options[item].classValid : 'valval-valid'; // Valid
-
-          options[item].valid = options[item].required ? false : true; // Required
-
-          options[item].required = options[item].required ? options[item].required : false;
-
-          if (item !== 'date' && item !== 'mail' && item !== 'repeatPassword' && item !== 'radio') {
-            // Min length
-            options[item].minLength = options[item].minLength ? options[item].minLength : 1; // Max length
-
-            options[item].maxLength = options[item].maxLength ? options[item].maxLength : '';
-          } // Regular expressions password
-
-
-          if (item === 'password') {
-            _this2.regexp_password = eval("/^.{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
-            _this2.regexp_password_only_rus = eval("/^[\u0410-\u042F|\u0430-\u044F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
-            _this2.regexp_password_only_numbers = eval("/^\\d{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
-            _this2.regexp_password_only_en = eval("/^[A-Z|a-z]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
-          } // Regular expressions mail
-
-
-          if (item === 'mail') {
-            _this2.regexp_mail = /^[A-Z|a-z|\d|\_|\-|\.]{1,}@[A-Z|a-z]{1,}\.[A-Z|a-z]{1,}$/;
-          } // Regular expressions date
-
-
-          if (item === 'date') {
-            _this2.regexp_date = /^(\d{2,2}[\/|\.|\-]){2,2}\d{4,4}$/;
-            _this2.regexp_date_only_slash = /^(\d{2,2}\/){2,2}\d{4,4}$/;
-            _this2.regexp_date_only_dot = /^(\d{2,2}\.){2,2}\d{4,4}$/;
-            _this2.regexp_date_only_hyphen = /^(\d{2,2}\-){2,2}\d{4,4}$/;
-          } // Regular expressions tel
-
-
-          if (item === 'tel') {
-            _this2.regexp_tel = eval("/^\\d{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
-          } // Regular expressions first name
-
-
-          if (item === 'firstName') {
-            _this2.regexp_first_name = eval("/^[a-z|A-Z|\u0430-\u044F|\u0410-\u042F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
-            _this2.regexp_first_name_only_rus = eval("/^[\u0410-\u042F|\u0430-\u044F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
-            _this2.regexp_first_name_only_en = eval("/^[A-Z|a-z]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
-          } // Regular expressions last name
-
-
-          if (item === 'lastName') {
-            _this2.regexp_last_name = eval("/^[a-z|A-Z|\u0430-\u044F|\u0410-\u042F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
-            _this2.regexp_last_name_only_rus = eval("/^[\u0410-\u042F|\u0430-\u044F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
-            _this2.regexp_last_name_only_en = eval("/^[A-Z|a-z]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
-          } // Regular expressions required
-
-
-          _this2.regexp_required = /.{1,}/;
-          _this2.options = options; // get size
-
-          var getSize = function getSize() {
-            var set = new Set();
-
-            for (var i in options[item].objOptions) {
-              set.add(i);
-            }
-
-            _this2.invalidSize = set.size;
-          };
-
-          getSize();
+        var _loop = function _loop(item) {
           options[item].element.addEventListener('input', function () {
             var value = options[item].element.value; // password
 
-            if (item === 'password' && !options[item].onlyRus && !options[item].onlyNumbers && !options[item].onlyEn) {
-              if (options[item].objOptions.repeatPassword) {
-                if (value) {
-                  _this2.regexp_repeat_password = eval("/^".concat(document.querySelector(options['repeatPassword'].repeatAt).value, "$/"));
-
-                  _this2.validationElement(_this2.regexp_password, value, options[item]);
-
-                  _this2.validationElement(_this2.regexp_repeat_password, document.querySelector(options['repeatPassword'].selectorEl).value, options['repeatPassword']);
-                } else {
-                  options[item].valid = false;
-
-                  _this2.checkValid(options[item].classInvalid, options[item].classValid, options[item], options[item].element);
-
-                  _this2.checkValidationElement(options[item]);
-
-                  _this2.invalidSize = _this2.addInvalidElementsInArray(options[item]);
-                }
-              } else {
-                _this2.validationElement(_this2.regexp_password, value, options[item]);
-              }
+            if (options[item].password && !options[item].onlyRus && !options[item].onlyNumbers && !options[item].onlyEn) {
+              _this2.validationElement(_this2.regexp_password, value, options[item]);
             } // password and only rus
 
 
-            if (item === 'password' && options[item].onlyRus) {
-              if (options[item].objOptions.repeatPassword) {
-                if (value) {
-                  _this2.regexp_repeat_password = eval("/^".concat(document.querySelector(options['repeatPassword'].repeatAt).value, "$/"));
-
-                  _this2.validationElement(_this2.regexp_password_only_rus, value, options[item]);
-
-                  _this2.validationElement(_this2.regexp_repeat_password, document.querySelector(options['repeatPassword'].selectorEl).value, options['repeatPassword']);
-                } else {
-                  options[item].valid = false;
-
-                  _this2.checkValid(options[item].classInvalid, options[item].classValid, options[item], options[item].element);
-
-                  _this2.checkValidationElement(options[item]);
-
-                  _this2.invalidSize = _this2.addInvalidElementsInArray(options[item]);
-                }
-              } else {
-                _this2.validationElement(_this2.regexp_password_only_rus, value, options[item]);
-              }
+            if (options[item].password && options[item].onlyRus) {
+              _this2.validationElement(_this2.regexp_password_only_rus, value, options[item]);
             } // password and only numbers
 
 
-            if (item === 'password' && options[item].onlyNumbers) {
-              if (options[item].objOptions.repeatPassword) {
-                if (value) {
-                  _this2.regexp_repeat_password = eval("/^".concat(document.querySelector(options['repeatPassword'].repeatAt).value, "$/"));
-
-                  _this2.validationElement(_this2.regexp_password_only_numbers, value, options[item]);
-
-                  _this2.validationElement(_this2.regexp_repeat_password, document.querySelector(options['repeatPassword'].selectorEl).value, options['repeatPassword']);
-                } else {
-                  options[item].valid = false;
-
-                  _this2.checkValid(options[item].classInvalid, options[item].classValid, options[item], options[item].element);
-
-                  _this2.checkValidationElement(options[item]);
-
-                  _this2.invalidSize = _this2.addInvalidElementsInArray(options[item]);
-                }
-              } else {
-                _this2.validationElement(_this2.regexp_password_only_numbers, value, options[item]);
-              }
+            if (options[item].password && options[item].onlyNumbers) {
+              _this2.validationElement(_this2.regexp_password_only_numbers, value, options[item]);
             } // password and only en
 
 
-            if (item === 'password' && options[item].onlyEn) {
-              if (options[item].objOptions.repeatPassword) {
-                if (value) {
-                  _this2.regexp_repeat_password = eval("/^".concat(document.querySelector(options['repeatPassword'].repeatAt).value, "$/"));
-
-                  _this2.validationElement(_this2.regexp_password_only_en, value, options[item]);
-
-                  _this2.validationElement(_this2.regexp_repeat_password, document.querySelector(options['repeatPassword'].selectorEl).value, options['repeatPassword']);
-                } else {
-                  options[item].valid = false;
-
-                  _this2.checkValid(options[item].classInvalid, options[item].classValid, options[item], options[item].element);
-
-                  _this2.checkValidationElement(options[item]);
-
-                  _this2.invalidSize = _this2.addInvalidElementsInArray(options[item]);
-                }
-              } else {
-                _this2.validationElement(_this2.regexp_password_only_en, value, options[item]);
-              }
+            if (options[item].password && options[item].onlyEn) {
+              _this2.validationElement(_this2.regexp_password_only_en, value, options[item]);
             } // mail
 
 
-            if (item === 'mail') {
+            if (options[item].mail) {
               _this2.validationElement(_this2.regexp_mail, value, options[item]);
             } // date
 
 
-            if (item === 'date' && !options[item].onlySlash && !options[item].onlyDot && !options[item].onlyHyphen) {
+            if (options[item].date && !options[item].onlySlash && !options[item].onlyDot && !options[item].onlyHyphen) {
               _this2.validationElement(_this2.regexp_date, value, options[item]);
             } // date and only only slash
 
 
-            if (item === 'date' && options[item].onlySlash) {
+            if (options[item].date && options[item].onlySlash) {
               _this2.validationElement(_this2.regexp_date_only_slash, value, options[item]);
             } // date and only only dot
 
 
-            if (item === 'date' && options[item].onlyDot) {
+            if (options[item].date && options[item].onlyDot) {
               _this2.validationElement(_this2.regexp_date_only_dot, value, options[item]);
             } // date and only only hyphen
 
 
-            if (item === 'date' && options[item].onlyHyphen) {
+            if (options[item].date && options[item].onlyHyphen) {
               _this2.validationElement(_this2.regexp_date_only_hyphen, value, options[item]);
             } // tel
 
 
-            if (item === 'tel') {
+            if (options[item].tel) {
               _this2.validationElement(_this2.regexp_tel, value, options[item]);
+            } // message and only en
+
+
+            if (options[item].message && options[item].onlyEn) {
+              _this2.validationElement(_this2.regexp_message_only_en, value, options[item]);
+            } // message and only rus
+
+
+            if (options[item].message && options[item].onlyRus) {
+              _this2.validationElement(_this2.regexp_message_only_rus, value, options[item]);
             } // repeat password
 
 
-            if (item === 'repeatPassword') {
-              if (!document.querySelector(options['repeatPassword'].repeatAt).value) {
-                options[item].valid = false;
+            if (options[item].repeatPassword) {
+              for (var i in options[item].objOptions) {
+                if (i === options[item].repeatAt) {
+                  if (!options[item].objOptions[i].element.value) {
+                    options[item].valid = false;
 
-                _this2.checkValid(options[item].classInvalid, options[item].classValid, options[item], options[item].element);
+                    _this2.checkValid(options[item]);
 
-                _this2.checkValidationElement(options[item]);
+                    _this2.checkValidationElement(options[item]);
 
-                _this2.invalidSize = _this2.addInvalidElementsInArray(options[item]);
-              } else {
-                _this2.regexp_repeat_password = _this2.regexp_repeat_password = eval("/^".concat(document.querySelector(options['repeatPassword'].repeatAt).value, "$/"));
+                    _this2.invalidSize = _this2.addInvalidElementsInArray(options[item]);
+                    options[item].objOptions[i].valid = false;
 
-                _this2.validationElement(_this2.regexp_repeat_password, value, options[item]);
+                    _this2.checkValid(options[item].objOptions[i]);
+
+                    _this2.checkValidationElement(options[item].objOptions[i]);
+
+                    _this2.invalidSize = _this2.addInvalidElementsInArray(options[item].objOptions[i]);
+                  } else {
+                    _this2.regexp_repeat_password = eval("/^".concat(options[item].objOptions[i].element.value, "$/"));
+
+                    _this2.validationElement(_this2.regexp_repeat_password, value, options[item]);
+                  }
+                }
               }
             } // First name
 
 
-            if (item === 'firstName' && !options[item].onlyRus && !options[item].onlyEn && !options[item].bigFirstSymbol) {
+            if (options[item].firstName && !options[item].onlyRus && !options[item].onlyEn && !options[item].bigFirstSymbol) {
               _this2.validationElement(_this2.regexp_first_name, value, options[item]);
             } // First name and big first symbol
 
 
-            if (item === 'firstName' && options[item].bigFirstSymbol) {
+            if (options[item].firstName && options[item].bigFirstSymbol) {
               _this2.regexp_first_name = eval("/^[A-Z|\u0410-\u042F]{1,1}[a-z|\u0430-\u044F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
 
               _this2.validationElement(_this2.regexp_first_name, value, options[item]);
             } // First name and only en
 
 
-            if (item === 'firstName' && options[item].onlyEn) {
+            if (options[item].firstName && options[item].onlyEn) {
               _this2.regexp_first_name_only_en = eval("/^[a-z]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
 
               _this2.validationElement(_this2.regexp_first_name_only_en, value, options[item]);
             } // First name and only en and big first symbol
 
 
-            if (item === 'firstName' && options[item].onlyEn && options[item].bigFirstSymbol) {
+            if (options[item].firstName && options[item].onlyEn && options[item].bigFirstSymbol) {
               _this2.regexp_first_name_only_en = eval("/^[A-Z]{1,1}[a-z]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
 
               _this2.validationElement(_this2.regexp_first_name_only_en, value, options[item]);
             } // First name and only rus
 
 
-            if (item === 'firstName' && options[item].onlyRus) {
+            if (options[item].firstName && options[item].onlyRus) {
               _this2.regexp_first_name_only_rus = eval("/^[\u0430-\u044F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
 
               _this2.validationElement(_this2.regexp_first_name_only_rus, value, options[item]);
             } // First name and only rus and big first symbol
 
 
-            if (item === 'firstName' && options[item].onlyRus && options[item].bigFirstSymbol) {
+            if (options[item].firstName && options[item].onlyRus && options[item].bigFirstSymbol) {
               _this2.regexp_first_name_only_rus = eval("/^[\u0410-\u042F]{1,1}[\u0430-\u044F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
 
               _this2.validationElement(_this2.regexp_first_name_only_rus, value, options[item]);
             } // last name
 
 
-            if (item === 'lastName' && !options[item].onlyRus && !options[item].onlyEn) {
+            if (options[item].lastName && !options[item].onlyRus && !options[item].onlyEn) {
               _this2.validationElement(_this2.regexp_last_name, value, options[item]);
             } // last name and big first symbol
 
 
-            if (item === 'lastName' && options[item].bigFirstSymbol) {
+            if (options[item].lastName && options[item].bigFirstSymbol) {
               _this2.regexp_last_name = eval("/^[A-Z|\u0410-\u042F]{1,1}[a-z|\u0430-\u044F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
 
               _this2.validationElement(_this2.regexp_last_name, value, options[item]);
             } // last name and only en
 
 
-            if (item === 'lastName' && options[item].onlyEn) {
+            if (options[item].lastName && options[item].onlyEn) {
               _this2.regexp_last_name_only_en = eval("/^[a-z]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
 
               _this2.validationElement(_this2.regexp_last_name_only_en, value, options[item]);
             } // last name and only en and big first symbol
 
 
-            if (item === 'lastName' && options[item].onlyEn && options[item].bigFirstSymbol) {
+            if (options[item].lastName && options[item].onlyEn && options[item].bigFirstSymbol) {
               _this2.regexp_last_name_only_en = eval("/^[A-Z]{1,1}[a-z]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
 
               _this2.validationElement(_this2.regexp_last_name_only_en, value, options[item]);
             } // last name and only rus
 
 
-            if (item === 'lastName' && options[item].onlyRus) {
+            if (options[item].lastName && options[item].onlyRus) {
               _this2.regexp_last_name_only_rus = eval("/^[\u0430-\u044F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
 
               _this2.validationElement(_this2.regexp_last_name_only_rus, value, options[item]);
             } // last name and only rus and big first symbol
 
 
-            if (item === 'lastName' && options[item].onlyRus && options[item].bigFirstSymbol) {
+            if (options[item].lastName && options[item].onlyRus && options[item].bigFirstSymbol) {
               _this2.regexp_last_name_only_rus = eval("/^[\u0410-\u042F]{1,1}[\u0430-\u044F]{".concat(options[item].minLength, ",").concat(options[item].maxLength, "}$/"));
 
               _this2.validationElement(_this2.regexp_last_name_only_rus, value, options[item]);
+            } // message
+
+
+            if (options[item].message) {
+              if (options[item].maxLength) {
+                if (value.length <= options[item].maxLength && value.length >= options[item].minLength) {
+                  options[item].valid = true;
+
+                  _this2.checkValid(options[item]);
+
+                  _this2.checkValidationElement(options[item]);
+
+                  _this2.invalidSize = _this2.addInvalidElementsInArray(options[item]);
+                } else {
+                  options[item].valid = false;
+
+                  _this2.checkValid(options[item]);
+
+                  _this2.checkValidationElement(options[item]);
+
+                  _this2.invalidSize = _this2.addInvalidElementsInArray(options[item]);
+                }
+              } else {
+                if (value.length >= options[item].minLength) {
+                  options[item].valid = true;
+
+                  _this2.checkValid(options[item]);
+
+                  _this2.checkValidationElement(options[item]);
+
+                  _this2.invalidSize = _this2.addInvalidElementsInArray(options[item]);
+                } else {
+                  options[item].valid = false;
+
+                  _this2.checkValid(options[item]);
+
+                  _this2.checkValidationElement(options[item]);
+
+                  _this2.invalidSize = _this2.addInvalidElementsInArray(options[item]);
+                }
+              }
             }
           });
+
+          var _loop2 = function _loop2(i) {
+            if (i === options[item].repeatAt) {
+              options[item].objOptions[i].element.addEventListener('input', function () {
+                if (!options[item].objOptions[i].element.value) {
+                  if (options[item].repeatPassword) {
+                    options[item].valid = false;
+
+                    _this2.checkValid(options[item]);
+
+                    _this2.checkValidationElement(options[item]);
+
+                    _this2.invalidSize = _this2.addInvalidElementsInArray(options[item]);
+                  }
+
+                  options[item].objOptions[i].valid = false;
+
+                  _this2.checkValid(options[item].objOptions[i]);
+
+                  _this2.checkValidationElement(options[item].objOptions[i]);
+
+                  _this2.invalidSize = _this2.addInvalidElementsInArray(options[item].objOptions[i]);
+                } else {
+                  if (options[item].repeatPassword) {
+                    _this2.regexp_repeat_password = eval("/^".concat(options[item].objOptions[i].element.value, "$/"));
+
+                    _this2.validationElement(_this2.regexp_repeat_password, options[item].element.value, options[item]);
+                  }
+                }
+              });
+            }
+          };
+
+          for (var i in options[item].objOptions) {
+            _loop2(i);
+          }
+
+          _this2.submitForm(options[item]);
+        };
+
+        for (var item in options) {
+          _loop(item);
         }
-
-        _this2.submitForm(options[item]);
-      };
-
-      for (var item in options) {
-        _loop(item);
       }
 
       return this;

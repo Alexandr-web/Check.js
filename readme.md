@@ -1,127 +1,81 @@
-# English
-## What is it?
-This is a library for form validation.
-This library is under development only, so don't judge strictly)
-
-## Download npm
-``` npm install valval --save ```
-
-## Keys
-| Key | Explanation |
-| ------ | ------ |
-| mail | For email |
-| password | For password |
-| date | For date |
-| tel | For phone |
-| repeatPassword | For repeat password |
-| firstName | For first name |
-| lastName | For last name |
-
->**Keys should not be repeated**
->**(1 object for the whole form)**
-
-- **mail** 
-    ```javascript
+# Version 2.0.0
+## What it is?
+This is a library for form validation. This library is under development, so don't judge strictly)
+## How it works?
+>**Use together with <input type="submit">**
+- **HTML**
+```html
+    <form>
+        <!-- In "data-valval" put the name -->
+        <input type="text" data-valval="firstName" />
+        <input type="password" data-valval="password" />
+        <input type="password" data-valval="repeatPassword" />
+        <input type="submit" value="Submit">
+    </form>
+```
+- **CSS**
+```css
+    .valid {
+        background-color: green;
+    }
+        
+    .invalid {
+        background-color: red;
+    }
+```
+- **JavaScript**
+```javascript
     import { Valval } from 'valval';
     
     const options = {
-	    mail: {
-	    	selectorEl: '.email',
-		    required: true
-	    }
-    }
-    
+            // Name which we indicated in "data-valval"
+            firstName: {
+            // Indicate params
+                required: true,
+                firstName: true,
+                classValid: 'valid',
+                classInvalid: 'invalid',
+                onlyEn: true
+            },
+            // Name which we indicated in "data-valval"
+            password: {
+                // Indicate params
+                required: true,
+                minLength: 6,
+                password: true,
+                classValid: 'valid',
+                classInvalid: 'invalid'
+            },
+            // Name which we indicated in "data-valval"
+            repeatPassword: {
+                // Indicate params
+                required: true,
+                repeatPassword: true,
+                repeatAt: 'password',
+                classValid: 'valid',
+                classInvalid: 'invalid'
+            }
+        }
+    // Put options in method "start"
     new Valval().start(options);
-    ```
-- **firstName** 
-    ```javascript
-    import { Valval } from 'valval';
-    
-    const options = {
-	    firstName: {
-		    selectorEl: '.first-name',
-		    required: true
-	    }
-    }
-    
-    new Valval().start(options);
-    ```
-- **lastName** 
-    ```javascript
-    import { Valval } from 'valval';
-    
-    const options = {
-	    lastName: {
-		    selectorEl: '.last-name',
-		    required: true
-	    }
-    }
-    
-    new Valval().start(options);
-    ```
-- **password**
-    ```javascript
-    import { Valval } from 'valval';
-    
-    const options = {
-	    password: {
-		    selectorEl: '.password',
-		    required: true
-	    }
-    }
-    
-    new Valval().start(options);
-    ```
-- **date**
-    ```javascript
-    import { Valval } from 'valval';
-    
-    const options = {
-	    date: {
-		    selectorEl: '.date',
-		    required: true
-	    }
-    }
-    
-    new Valval().start(options);
-    ```
-- **tel**
-    ```javascript
-    import { Valval } from 'valval';
-    
-    const options = {
-	    tel: {
-		    selectorEl: '.tel',
-		    required: true
-	    }
-    }
-    
-    new Valval().start(options);
-    ```
-- **repeatPassword**
-    ```javascript
-    import { Valval } from 'valval';
-    
-    const options = {
-	    repeatPassword: {
-		    selectorEl: '.repeatPassword',
-		    required: true
-	    }
-    }
-    
-    new Valval().start(options);
-    ```
-    
+```
 ## Options
-- General
+- **General**
     | Option | Type | Value | Example |
     | ------ | ------ | ------ | ------ |
     | required | Boolean | Required input field | ``` required: true  ``` |
     | validationElement | Object | Item options to check | ``` validationElement: { have: true, selectorEl: '.password__valid' } ``` |
     | classValid | String | Element class after successful check (the default class is .valval-valid) | ``` classValid: 'valid' ``` |
     | classInvalid | String | Element class after unsuccessful validation (the default class is .valval-invalid) | ``` classInvalid: 'invalid' ``` |
-    | selectorEl | String | Element selector | ``` selectorEl: '.password' ``` |
-    >**Use either classes or id**
+    | preventDefault | Boolean | To cancel page reload when sending data (default true) | ``` preventDefault: false ``` |
+    | password | Boolean | For password | ``` password: true ``` |
+    | mail | Booelan | For email | ``` mail: true ``` |
+    | message | Booelan | For message | ``` message: true ``` |
+    | date | Boolean | For date | ``` date: true ``` |
+    | tel | Boolean | For phone | ``` tel: true ``` |
+    | repeatPassword | Boolean | For repeat password | ``` repeatPassword: true ``` |
+    | firstName | Booelan | For first name | ``` firstName: true ``` |
+    | lastName | Booelan | For last name | ``` lastName: true ``` |
 
     Options in ``` validationElement ```
     | Option | Type | Value | Example |
@@ -132,8 +86,7 @@ This library is under development only, so don't judge strictly)
     | selectorEl | String | Element selector | ``` selectorEl: '.validation-el' ``` |
     | textWhenValid | String | Element text after successful check | ``` textWhenValid: 'Successfully' ``` |
     | textWhenInvalid | String | Element text after unsuccessful check | ``` textWhenValid: 'Unsuccessfully' ``` |
-- Unique
-
+- **Unique**
     Options in ``` password ```
     | Option | Type | Value | Example |
     | ------ | ------ | ------ | ------ |
@@ -151,8 +104,8 @@ This library is under development only, so don't judge strictly)
     Options in ``` repeatPassword ```
     | Option | Type | Value | Example |
     | ------ | ------ | ------ | ------ |
-    | repeatAt | String | The element selector at which you want to repeat the password | ``` repeatAt: '.password' ``` |
-
+    | repeatAt | String | The name of the item in the object at which you want to repeat the password | ``` repeatAt: 'password' ``` |
+    
     Options in ``` date ```
     | Option | Type | Value | Example |
     | ------ | ------ | ------ | ------ |
@@ -167,7 +120,7 @@ This library is under development only, so don't judge strictly)
     | ------ | ------ | ------ | ------ |
     | minLength | Number | Minimum number of characters per line (default 1) | ``` minLength: 6 ``` |
     | maxLength | Number | Maximum number of characters per line (infinity by default) | ``` maxLength: 6 ``` |
-
+    
     Options in ``` firstName ``` and ``` lastName ```
     | Option | Type | Value | Example |
     | ------ | ------ | ------ | ------ |
@@ -175,301 +128,9 @@ This library is under development only, so don't judge strictly)
     | onlyRus | Boolean | Only russian language (русский) | ``` onlyRus: true ``` |
     | bigFirstSymbol | Boolean | Line starts with a capital letter | ``` bigFirstSymbol: true ``` |
     >**If all these properties are disabled (false),**
-    >**then the default is any value in the line**
+    >**then by default - any value in a string of type String**
     
     | Option | Type | Value | Example |
     | ------ | ------ | ------ | ------ |
     | minLength | Number | Minimum number of characters per line (default 1) | ``` minLength: 6 ``` |
-    | maxLength | Number | Maximum number of characters per line (infinity by default) | ``` maxLength: 6 ``` |`
-    
-## Example of work
-    
-HTML Code
-```html
-    <form action="">
-        <input type="text" placeholder="First name" class="first-name">
-        <input type="text" placeholder="Email" class="email">
-        <input type="password" placeholder="Password" class="password">
-        <input type="password" placeholder="Repeat password" class="repeat-password">
-        <input type="submit" value="Submit">
-    </form>
-```
-CSS Code
-```css
-    .valval-invalid {
-        background-color: rgba(255, 0, 0, 0.3);
-    }
-
-    .valval-valid {
-        background-color: rgba(0, 255, 0, 0.3);
-    }
-```
-JavaScript Code
-```javascript
-    import { Valval } from 'valval';
-
-    const options = {
-        mail: {
-            required: true,
-            selectorEl: '.email'
-        },
-        firstName: {
-            required: true,
-            bigFirstSymbol: true,
-            onlyEn: true,
-            selectorEl: '.first-name',
-            minLength: 2
-        },
-        password: {
-            required: true,
-            selectorEl: '.password',
-            minLength: 6,
-            maxLength: 12,
-            onlyEn: true
-        },
-        repeatPassword: {
-            required: true,
-            selectorEl: '.repeat-password',
-            repeatAt: '.password'
-        }
-    }
-
-    new Valval().start(options);
-```
-
-# Русский
-## Что это?
-Это библиотека для проверки формы. Библиотека находится в стадии разработки, поэтому не судите сторого)
-## Установка пакета через npm
-``` npm install valval --save ```
-## Ключи
-| Ключ | Пояснение |
-| ------ | ------ |
-| mail | Для электронной почты |
-| password | Для пароля |
-| date | Для даты |
-| tel | Для телефона |
-| repeatPssword | Для повторения пароля |
-| firstName | Для имени |
-| lastName | Для фамилии |
-
->**Ключи не должны повторяться (1 объект на всю форму)**
-
-- **mail** 
-    ```javascript
-	    import { Valval } from 'valval';
-
-	    const options = {
-		    mail: {
-			selectorEl: '.email',
-			    required: true
-		    }
-	    }
-
-	    new Valval().start(options);
-    ```
-    
-- **firstName** 
-    ```javascript
-	    import { Valval } from 'valval';
-
-	    const options = {
-		    firstName: {
-			    selectorEl: '.first-name',
-			    required: true
-		    }
-	    }
-
-	    new Valval().start(options);
-    ```
-    
-- **lastName** 
-    ```javascript
-	    import { Valval } from 'valval';
-
-	    const options = {
-		    lastName: {
-			    selectorEl: '.last-name',
-			    required: true
-		    }
-	    }
-
-	    new Valval().start(options);
-    ```
-    
-- **password**
-    ```javascript
-	    import { Valval } from 'valval';
-
-	    const options = {
-		    password: {
-			    selectorEl: '.password',
-			    required: true
-		    }
-	    }
-
-	    new Valval().start(options);
-    ```
-    
-- **date**
-    ```javascript
-	    import { Valval } from 'valval';
-
-	    const options = {
-		    date: {
-			    selectorEl: '.date',
-			    required: true
-		    }
-	    }
-
-	    new Valval().start(options);
-    ```
-    
-- **tel**
-    ```javascript
-	    import { Valval } from 'valval';
-
-	    const options = {
-		    tel: {
-			    selectorEl: '.tel',
-			    required: true
-		    }
-	    }
-
-	    new Valval().start(options);
-    ```
-    
-- **repeatPassword**
-    ```javascript
-	    import { Valval } from 'valval';
-
-	    const options = {
-		    repeatPassword: {
-			    selectorEl: '.repeatPassword',
-			    required: true
-		    }
-	    }
-
-	    new Valval().start(options);
-    ```
-## Опции
-- **Общие**
-    | Опция | Тип | Значение | Пример |
-    | ------ | ------ | ------ | ------ |
-    | required | Boolean | Обязательное поле ввода | ``` required: true ``` |
-    | validationElement | Object | Элемент для проверки | ``` validationElement: { have: true, selectorEl: '.password__valid' } ``` |
-    | classValid | String | Класс элемента после успешной проверки (по умолчанию стоит класс .valval-valid) | ``` classValid: 'valid' ``` |
-    | classInvalid | String | Класс элемента после неудачной проверки (по умолчанию стоит класс .valval-invalid) | ``` classInvalid: 'invalid' ``` |
-    | selectorEl | String | Селектор элемента | ``` selectorEl: '.password' ``` |
-    >**Используйте классы(class) или айди(id)**
-	
-    Опции в ``` validationElement ```
-    | Опция | Тип | Значени | Пример |
-    | ------ | ------ | ------ | ------ |
-    | have | Boolean | Будет ли элемент для проверки | ``` have: true ``` |
-    | classValid | String | Класс элемента после успешной проверки (по умолчанию стоит класс .valval-valid-el) | ``` classValid: 'valid-el' ``` |
-    | classInvalid | String | Класс элемента после неудачной проверки (по умолчанию стоит класс .valval-invalid-el) | ``` classInvalid: 'invalid-el' ``` |
-    | selectorEl | String | Селектор элемента | ``` selectorEl: '.validation-el' ``` |
-    | textWhenValid | String | Текст элемента после успешной проверки | ``` textWhenValid: 'Удачно' ``` |
-    | textWhenInvalid | String | Текст элемента после неудачной проверки | ``` textWhenValid: 'Неудачно' ``` |
-- **Уникальные**
-    Опции в ``` password ```
-    | Опция | Тип | Значение | Пример |
-    | ------ | ------ | ------ | ------ |
-    | onlyRus | Boolean | Только русский язык (русский) | ``` onlyRus: true ``` |
-    | onlyEn | Boolean | Только английский язык (english) | ``` onlyEn: true ``` |	
-    | onlyNumbers | Boolean | Только цифры (123456) | ``` onlyNumbers: true ``` |	
-    >**Если все эти опции отключены (false), то по умолчанию**
-    >**проверку пройдет любое значение в строке**
-	
-    | Опция | Тип | Значение | Пример |
-    | ------ | ------ | ------ | ------ |
-    | minLength | Number | Минимум символов в строке (по умолчанию 1) | ``` minLength: 6 ``` |
-    | maxLength | Number | Максимум символов в строке (по умолчанию бесконечность) | ``` maxLength: 6 ``` |
-	
-    Опции в ``` repeatPassword ```
-    | Опция | Тип | Значение | Пример |
-    | ------ | ------ | ------ | ------ |
-    | repeatAt | String | Селектор элемента, у которого хотите повторять пароль | ``` repeeatAt: '.password' ``` |
-	
-    Опции в ``` date ```
-    | Опция | Тип | Значение | Пример |
-    | ------ | ------ | ------ | ------ |
-    | onlyDot | Boolean | Дата идет только через точку (11.11.1111) | ``` onlyDot: true ``` |
-    | onlySlash | Boolean | Дата идет только через слэш (11/11/1111) | ``` onlySlash: true ``` |
-    | onlyHyphen | Boolean | Дата идет только через дефис (11-11-1111) | ``` onlyHyphen: true ``` |
-    >**Если все эти опции отключены (false), то по умолчанию дата может**
-    >**идти либо через слэш, точку или дефис**
-	
-    Опции в ``` tel ```
-    | Опция | Тип | Значение | Пример |
-    | ------ | ------ | ------ | ------ |
-    | minLength | Number | Минимум символов в строке (по умолчанию 1) | ``` minLength: 6 ``` |
-    | maxLength | Number | Максимум символов в строке (по умолчанию бесконечность) | ``` maxLength: 6 ``` |
-	
-    Опции в ``` firstName ``` и ``` lastName ```
-    | Опция | Тип | Значение | Пример |
-    | ------ | ------ | ------ | ------ |
-    | onlyRus | Boolean | Только русский язык (русский) | ``` onlyRus: true ``` |
-    | onlyEn | Boolean | Только английский язык (english) | ``` onlyEn: true ``` |	
-    | bigFirstSymbol | Boolean | Начинается с большой буквы | ``` bigFirstSymbol: true ``` |
-    >**Если все эти опции отключены (false), то по умолчанию 
-    >**проверку пройдет любое значение в строке (с типом String)**
-	
-    | Опция | Тип | Значение | Пример |
-    | ------ | ------ | ------ | ------ |
-    | minLength | Number | Минимум символов в строке (по умолчанию 1) | ``` minLength: 6 ``` |
-    | maxLength | Number | Максимум символов в строке (по умолчанию бесконечность) | ``` maxLength: 6 ``` |
-## Пример работы
-HTML Код
-```html
-    <form action="">
-        <input type="text" placeholder="First name" class="first-name">
-        <input type="text" placeholder="Email" class="email">
-        <input type="password" placeholder="Password" class="password">
-        <input type="password" placeholder="Repeat password" class="repeat-password">
-        <input type="submit" value="Submit">
-    </form>
-```
-CSS Код
-```css
-    .valval-invalid {
-        background-color: rgba(255, 0, 0, 0.3);
-    }
-
-    .valval-valid {
-        background-color: rgba(0, 255, 0, 0.3);
-    }
-```
-JavaScript Код
-```javascript
-    import { Valval } from 'valval';
-
-    const options = {
-        mail: {
-            required: true,
-            selectorEl: '.email'
-        },
-        firstName: {
-            required: true,
-            bigFirstSymbol: true,
-            onlyEn: true,
-            selectorEl: '.first-name',
-            minLength: 2
-        },
-        password: {
-            required: true,
-            selectorEl: '.password',
-            minLength: 6,
-            maxLength: 12,
-            onlyEn: true
-        },
-        repeatPassword: {
-            required: true,
-            selectorEl: '.repeat-password',
-            repeatAt: '.password'
-        }
-    }
-
-    new Valval().start(options);
-```
+    | maxLength | Number | Maximum number of characters per line (infinity by default) | ``` maxLength: 6 ``` |

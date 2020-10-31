@@ -1,6 +1,6 @@
 {
     "name": "valval",
-    "version": "1.0.16",
+    "version": "2.0.0",
     "description": "Form validation library",
     "main": "dist/js/index.js",
     "scripts": {
