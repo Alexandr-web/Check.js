@@ -1,4 +1,3 @@
-# Version 2.0.0
 ## What it is?
 This is a library for form validation. This library is under development, so don't judge strictly)
 ## How it works?
