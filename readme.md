@@ -113,7 +113,7 @@ This is a library for form validation. This library is under development, so don
     | maxLength | Number | Maximum number of characters per line (infinity by default) | ``` maxLength: 6 ``` |
     | contentInPassword | Object | What should be in the password | ``` contentInPassword: ["alex", "123", "A"] ``` |
     
-    >**besides: '*', '+', '(', ')', '$', '^', '?', '/', '|', '\\'**
+    >**besides: '*', '+', '(', ')', '$', '^', '?', '/', '|', '\\'.**
     >**Used when items (onlyEn, onlyRus, onlyNumbers) are disabled**
 
     Options in ``` repeatPassword ```
