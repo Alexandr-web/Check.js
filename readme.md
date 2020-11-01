@@ -112,7 +112,7 @@ This is a library for form validation. This library is under development, so don
     | minLength | Number | Minimum number of characters per line (default 1) | ``` minLength: 6 ``` |
     | maxLength | Number | Maximum number of characters per line (infinity by default) | ``` maxLength: 6 ``` |
     | contentInPassword | Object | What should be in the password | ``` contentInPassword: ["alex", "123", "A"] ``` |
-    >**besides: '*', '+', '(', ')', '$', '^', '?', '/', '|', '\'**
+    >**besides: '*', '+', '(', ')', '$', '^', '?', '/', '|', '\\'**
 
     Options in ``` repeatPassword ```
     | Option | Type | Value | Example |
