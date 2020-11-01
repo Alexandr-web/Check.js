@@ -1,67 +1,76 @@
-# Version 2.0.0
 ## What it is?
 This is a library for form validation. This library is under development, so don't judge strictly)
 ## How it works?
 >**Use together with input type="submit"**
 - **HTML**
 ```html
-    <form>
+    <form action="">
         <!-- In "data-valval" put the name -->
         <input type="text" data-valval="firstName" />
         <input type="password" data-valval="password" />
         <input type="password" data-valval="repeatPassword" />
-        <input type="submit" value="Submit">
+        <input type="submit" data-valval="button" value="Submit">
     </form>
 ```
 - **CSS**
 ```css
     .valid {
-        background-color: green;
+        background-color: rgba(0, 255, 0, .3);
     }
-        
+    
     .invalid {
-        background-color: red;
+        background-color: rgba(255, 0, 0, .3);
     }
 ```
 - **JavaScript**
 ```javascript
     import { Valval } from 'valval';
-    
+
     const options = {
-            // Name which we indicated in "data-valval"
-            firstName: {
+        // Name which we indicated in "data-valval"
+        firstName: {
             // Indicate params
-                required: true,
-                name: true,
-                classValid: 'valid',
-                classInvalid: 'invalid',
-                onlyEn: true
-            },
-            // Name which we indicated in "data-valval"
-            password: {
-                // Indicate params
-                required: true,
-                minLength: 6,
-                password: true,
-                classValid: 'valid',
-                classInvalid: 'invalid'
-            },
-            // Name which we indicated in "data-valval"
-            repeatPassword: {
-                // Indicate params
-                required: true,
-                repeatPassword: true,
-                repeatAt: 'password',
-                classValid: 'valid',
-                classInvalid: 'invalid'
-            }
+            required: true,
+            minLength: 6,
+            maxLength: 12,
+            name: true,
+            classValid: 'valid',
+            classInvalid: 'invalid',
+            onlyEn: true
+        },
+        // Name which we indicated in "data-valval"
+        password: {
+            // Indicate params
+            required: true,
+            minLength: 6,
+            password: true,
+            classValid: 'valid',
+            classInvalid: 'invalid',
+            contentInPassword: ["alex", "123"]
+        },
+        // Name which we indicated in "data-valval"
+        repeatPassword: {
+            // Indicate params
+            required: true,
+            repeatPassword: true,
+            repeatAt: 'password',
+            classValid: 'valid',
+            classInvalid: 'invalid'
+        },
+        // Name which we indicated in "data-valval"
+        button: {
+            // Indicate params
+            textWhenValid: 'Valid form',
+            textWhenInvalid: 'Invalid form',
+            button: true
         }
+    }
+
     // Put options in method "start"
     new Valval().start(options);
 ```
 ## Options
 - **General**
-
     | Option | Type | Value | Example |
     | ------ | ------ | ------ | ------ |
     | required | Boolean | Required input field | ``` required: true  ``` |
@@ -76,6 +85,7 @@ This is a library for form validation. This library is under development, so don
     | tel | Boolean | For phone | ``` tel: true ``` |
     | repeatPassword | Boolean | For repeat password | ``` repeatPassword: true ``` |
     | name | Boolean | For name | ``` name: true ``` |
+    | button | Boolean | For button (type="submit") | ``` button: true ``` |
 
     Options in ``` validationElement ```
     | Option | Type | Value | Example |
@@ -87,7 +97,7 @@ This is a library for form validation. This library is under development, so don
     | textWhenValid | String | Element text after successful check | ``` textWhenValid: 'Successfully' ``` |
     | textWhenInvalid | String | Element text after unsuccessful check | ``` textWhenValid: 'Unsuccessfully' ``` |
 - **Unique**
-
+    
     Options in ``` password ```
     | Option | Type | Value | Example |
     | ------ | ------ | ------ | ------ |
@@ -101,6 +111,7 @@ This is a library for form validation. This library is under development, so don
     | ------ | ------ | ------ | ------ |
     | minLength | Number | Minimum number of characters per line (default 1) | ``` minLength: 6 ``` |
     | maxLength | Number | Maximum number of characters per line (infinity by default) | ``` maxLength: 6 ``` |
+    | contentInPassword | Object | What should be in the password (besides: '*', '+', '(', ')', '$', '^', '?', '/', '|', '\') | ``` contentInPassword: ["alex", "123", "A"] ``` |
 
     Options in ``` repeatPassword ```
     | Option | Type | Value | Example |
@@ -135,3 +146,11 @@ This is a library for form validation. This library is under development, so don
     | ------ | ------ | ------ | ------ |
     | minLength | Number | Minimum number of characters per line (default 1) | ``` minLength: 6 ``` |
     | maxLength | Number | Maximum number of characters per line (infinity by default) | ``` maxLength: 6 ``` |
+
+    Options in ``` button ```
+    | Option | Type | Value | Example |
+    | ------ | ------ | ------ | ------ |
+    | textWhenValid | String | Button text on successful check | ``` textWhenValid: 'Valid form' ``` |
+    | textWhenInvalid | String | Button text on unsuccessful check | ``` textWhenInvalid: 'Invalid form' ``` |
+    | classValid | String | Button class on successful check (the default class is .valval-valid-btn) | ``` classValid: 'valid-btn' ``` |
+    | classInvalid | String | Button class on unsuccessful check (the default class is .valval-invalid-btn) | ``` classInvalid: 'invalid-btn' ``` |
