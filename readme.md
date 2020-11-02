@@ -73,7 +73,6 @@ This is a library for form validation. This library is under development, so don
 - **General**
     | Option | Type | Value | Example |
     | ------ | ------ | ------ | ------ |
-    | required | Boolean | Required input field | ``` required: true  ``` |
     | validationElement | Object | Item options to check | ``` validationElement: { have: true, selectorEl: '.password__valid' } ``` |
     | classValid | String | Element class after successful check (the default class is .valval-valid) | ``` classValid: 'valid' ``` |
     | classInvalid | String | Element class after unsuccessful validation (the default class is .valval-invalid) | ``` classInvalid: 'invalid' ``` |
@@ -112,6 +111,7 @@ This is a library for form validation. This library is under development, so don
     | minLength | Number | Minimum number of characters per line (default 1) | ``` minLength: 6 ``` |
     | maxLength | Number | Maximum number of characters per line (infinity by default) | ``` maxLength: 6 ``` |
     | contentInPassword | Object | What should be in the password | ``` contentInPassword: ["alex", "123", "A"] ``` |
+    | required | Boolean | Required input field | ``` required: true  ``` |
     
     >**besides: '*', '+', '(', ')', '$', '^', '?', '/', '|', '\\'.**
     >**Used when items (onlyEn, onlyRus, onlyNumbers) are disabled**
@@ -119,6 +119,7 @@ This is a library for form validation. This library is under development, so don
     Options in ``` repeatPassword ```
     | Option | Type | Value | Example |
     | ------ | ------ | ------ | ------ |
+    | required | Boolean | Required input field | ``` required: true  ``` |
     | repeatAt | String | The name of the item in the object at which you want to repeat the password | ``` repeatAt: 'password' ``` |
     
     Options in ``` date ```
@@ -135,6 +136,7 @@ This is a library for form validation. This library is under development, so don
     | ------ | ------ | ------ | ------ |
     | minLength | Number | Minimum number of characters per line (default 1) | ``` minLength: 6 ``` |
     | maxLength | Number | Maximum number of characters per line (infinity by default) | ``` maxLength: 6 ``` |
+    | required | Boolean | Required input field | ``` required: true  ``` |
     
     Options in ``` name ```
     | Option | Type | Value | Example |
@@ -149,6 +151,7 @@ This is a library for form validation. This library is under development, so don
     | ------ | ------ | ------ | ------ |
     | minLength | Number | Minimum number of characters per line (default 1) | ``` minLength: 6 ``` |
     | maxLength | Number | Maximum number of characters per line (infinity by default) | ``` maxLength: 6 ``` |
+    | required | Boolean | Required input field | ``` required: true  ``` |
 
     Options in ``` button ```
     | Option | Type | Value | Example |
