@@ -1,5 +1,11 @@
 ## What it is?
 This is a library for form validation. This library is under development, so don't judge strictly)
+## Using npm
+``` npm install valval ```
+## Browser
+```html
+    <script src="index-min.js"></script>
+```
 ## How it works?
 >**Use together with input type="submit"**
 - **HTML**
