@@ -1,8 +1,8 @@
 {
     "name": "valval",
-    "version": "2.4.1",
+    "version": "2.4.2",
     "description": "Form validation library",
-    "main": "dist/index-min.js",
+    "main": "dist/valval.min.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
