@@ -32,27 +32,19 @@ class Valval {
 
         form.addEventListener('submit', event => {
             item.preventDefault && event.preventDefault();
-
+            console.log(this.getInvalidSize());
             this.outputCallbackWhenElementValid(item);
             this.outputCallbackWhenElementInvalid(item);
+            this.checkValidationElement(item);
 
             if (!this.invalidSize) {
-                form.submit();
+                if (item.formSubmit) {
+                    item.handlerWhenValidForm && item.handlerWhenValidForm();
+                    this.switchingClasses(item.form, item.classInvalid, item.classValid, true);
+                }
 
                 if (item.button) {
-                    // if type object
-                    if (typeof item.classInvalid === 'object') {
-                        item.classInvalid.map(className => item.element.classList.remove(className));
-                    } else {
-                        item.element.classList.remove(item.classInvalid);
-                    }
-
-                    // if type object
-                    if (typeof item.classValid === 'object') {
-                        item.classValid.map(className => item.element.classList.add(className));
-                    } else {
-                        item.element.classList.add(item.classValid);
-                    }
+                    this.switchingClasses(item.element, item.classInvalid, item.classValid, true);
 
                     // If have value
                     if (item.element.value) {
@@ -61,25 +53,20 @@ class Valval {
                         item.element.innerText = item.textWhenValid;
                     }
                 }
+
+                form.submit();
             } else {
+                if (item.formSubmit) {
+                    item.handlerWhenInvalidForm && item.handlerWhenInvalidForm();
+                    this.switchingClasses(item.form, item.classInvalid, item.classValid, false);
+                }
+
                 if (item.required) {
                     this.checkRequired(item);
                 }
 
                 if (item.button) {
-                    // if type object
-                    if (typeof item.classInvalid === 'object') {
-                        item.classInvalid.map(className => item.element.classList.add(className));
-                    } else {
-                        item.element.classList.add(item.classInvalid);
-                    }
-
-                    // if type object
-                    if (typeof item.classValid === 'object') {
-                        item.classValid.map(className => item.element.classList.remove(className));
-                    } else {
-                        item.element.classList.remove(item.classValid);
-                    }
+                    this.switchingClasses(item.element, item.classInvalid, item.classValid, false);
 
                     // If have value
                     if (item.element.value) {
@@ -90,6 +77,33 @@ class Valval {
                 }
             }
         });
+    }
+    switchingClasses(item, classInvalid, classValid, valid) {
+        if (!valid) {
+            if (typeof classValid === 'object') {
+                classValid.map(className => item.classList.remove(className));
+            } else {
+                item.classList.remove(classValid);
+            }
+
+            if (typeof classInvalid === 'object') {
+                classInvalid.map(className => item.classList.add(className));
+            } else {
+                item.classList.add(classInvalid);
+            }
+        } else {
+            if (typeof classValid === 'object') {
+                classValid.map(className => item.classList.add(className));
+            } else {
+                item.classList.add(classValid);
+            }
+
+            if (typeof classInvalid === 'object') {
+                classInvalid.map(className => item.classList.remove(className));
+            } else {
+                item.classList.remove(classInvalid);
+            }
+        }
     }
     checkRequired(item) {
         if (!this.regexp_required.test(item.element.value)) {
@@ -112,37 +126,22 @@ class Valval {
         if (item.validationElement && item.validationElement.have) {
             const validationEl = document.querySelector(item.validationElement.selectorEl);
 
-            if (item.valid) {
-                validationEl.innerText = item.validationElement.textWhenValid;
+            if (!item.formSubmit) {
+                if (item.valid) {
+                    validationEl.innerText = item.validationElement.textWhenValid;
 
-                // if type object
-                if (typeof item.validationElement.classInvalid === 'object') {
-                    item.validationElement.classInvalid.map(className => validationEl.classList.remove(className));
+                    this.switchingClasses(validationEl, item.validationElement.classInvalid, item.validationElement.classValid, true);
                 } else {
-                    validationEl.classList.remove(item.validationElement.classInvalid || 'valval-invalid-el');
-                }
-
-                // if type object
-                if (typeof item.validationElement.classValid === 'object') {
-                    item.validationElement.classValid.map(className => validationEl.classList.add(className));
-                } else {
-                    validationEl.classList.add(item.validationElement.classValid || 'valval-valid-el');
+                    validationEl.innerText = item.validationElement.textWhenInvalid;
+                    this.switchingClasses(validationEl, item.validationElement.classInvalid, item.validationElement.classValid, false);
                 }
             } else {
-                validationEl.innerText = item.validationElement.textWhenInvalid;
-
-                // if type object
-                if (typeof item.validationElement.classInvalid === 'object') {
-                    item.validationElement.classInvalid.map(className => validationEl.classList.add(className));
+                if (!this.invalidSize) {
+                    validationEl.innerText = item.validationElement.textWhenValid;
+                    this.switchingClasses(validationEl, item.validationElement.classInvalid, item.validationElement.classValid, true);
                 } else {
-                    validationEl.classList.add(item.validationElement.classInvalid || 'valval-invalid-el');
-                }
-
-                // if type object
-                if (typeof item.validationElement.classValid === 'object') {
-                    item.validationElement.classValid.map(className => validationEl.classList.remove(className));
-                } else {
-                    validationEl.classList.remove(item.validationElement.classValid || 'valval-valid-el');
+                    validationEl.innerText = item.validationElement.textWhenInvalid;
+                    this.switchingClasses(validationEl, item.validationElement.classInvalid, item.validationElement.classValid, false);
                 }
             }
         }
@@ -160,35 +159,7 @@ class Valval {
         }
     }
     checkValid(item) {
-        if (item.valid) {
-            // if type object
-            if (typeof item.classInvalid === 'object') {
-                item.classInvalid.map(className => item.element.classList.remove(className));
-            } else {
-                item.element.classList.remove(item.classInvalid);
-            }
-
-            // if type object
-            if (typeof item.classValid === 'object') {
-                item.classValid.map(className => item.element.classList.add(className));
-            } else {
-                item.element.classList.add(item.classValid);
-            }
-        } else {
-            // if type object
-            if (typeof item.classInvalid === 'object') {
-                item.classInvalid.map(className => item.element.classList.add(className));
-            } else {
-                item.element.classList.add(item.classInvalid);
-            }
-
-            // if type object
-            if (typeof item.classValid === 'object') {
-                item.classValid.map(className => item.element.classList.remove(className));
-            } else {
-                item.element.classList.remove(item.classValid);
-            }
-        }
+        this.switchingClasses(item.element, item.classInvalid, item.classValid, item.valid ? true : false);
     }
     outputCallbackWhenElementValid(item) {
         if (item.handlerWhenValidElement) {
@@ -199,7 +170,7 @@ class Valval {
     }
     outputCallbackWhenElementInvalid(item) {
         if (item.handlerWhenInvalidElement) {
-               if (!item.valid) {
+            if (!item.valid) {
                 item.handlerWhenInvalidElement();
             }
         }
@@ -243,21 +214,46 @@ class Valval {
     getDefaultParams(options) {
         for (let item in options) {
             // Start default params
-            // Element
-            options[item].element = document.querySelector(`[data-valval="${item}"]`);
-            // Prevent default
-            options[item].preventDefault = true;
-            // Form
-            options[item].form = options[item].element.form;
-            // Elements in form
-            options[item].elementsInForm = [...options[item].element.form.elements].filter(item => item.type !== 'submit');
+            if (!options[item].formSubmit) {
+                // Element
+                options[item].element = document.querySelector(`[data-valval="${item}"]`);
+                // Prevent default
+                options[item].preventDefault = true;
+                // Elements in form
+                options[item].elementsInForm = [...options[item].element.form.elements].filter(item => item.type !== 'submit');
+                // Valid
+                options[item].valid = options[item].required ? false : true;
+                // Form
+                options[item].form = options[item].element.form;
+                // Validation element
+                options[item].validationElement = options[item].validationElement ? options[item].validationElement : {};
+            }
+
             // Obj options
             options[item].objOptions = options;
-            // Valid
-            options[item].valid = options[item].required ? false : true;
 
-            // Everything except the button
-            if (!options[item].button) {
+            // Only form
+            if (options[item].formSubmit) {
+                // Validation element
+                options[item].validationElement = options[item].validationElement ? options[item].validationElement : {};
+                // Form
+                options[item].form = document.querySelector(`[data-valval="${item}"]`);
+                // Obj options
+                options[item].objOptions = options;
+                // Valid
+                options[item].valid = true;
+                // Handler when invalid form
+                options[item].handlerWhenInvalidForm = options[item].handlerWhenInvalidForm ? options[item].handlerWhenInvalidForm : false;
+                // Handler when valid form
+                options[item].handlerWhenValidForm = options[item].handlerWhenValidForm ? options[item].handlerWhenValidForm : false;
+                // Class invalid
+                options[item].classInvalid = options[item].classInvalid ? options[item].classInvalid : 'valval-invalid-form';
+                // Class valid
+                options[item].classValid = options[item].classValid ? options[item].classValid : 'valval-valid-form';
+            }
+
+            // Everything except the button and form
+            if (!options[item].button && !options[item].formSubmit) {
                 // Required
                 options[item].required = options[item].required ? options[item].required : false;
                 // Class valid
@@ -266,16 +262,15 @@ class Valval {
                 options[item].classInvalid = options[item].classInvalid ? options[item].classInvalid : 'valval-invalid';
                 // Submit
                 options[item].submit = [...options[item].element.form.elements].find(item => item.type === 'submit');
-                // Validation element
-                options[item].validationElement = options[item].validationElement ? options[item].validationElement : {};
-                // Handler when invalid form
+                8
+                // Handler when invalid element
                 options[item].handlerWhenInvalidElement = options[item].handlerWhenInvalidElement ? options[item].handlerWhenInvalidElement : false;
-                // Handler when valid form
+                // Handler when valid element
                 options[item].handlerWhenValidElement = options[item].handlerWhenValidElement ? options[item].handlerWhenValidElement : false;
             }
 
             // Everything except the date, mail repeat password and button
-            if (!options[item].date && !options[item].mail && !options[item].repeatPassword && !options[item].button) {
+            if (!options[item].date && !options[item].mail && !options[item].repeatPassword && !options[item].button && !options[item].formSubmit) {
                 // Min length
                 options[item].minLength = options[item].minLength ? options[item].minLength : 1;
                 // Max length
@@ -304,13 +299,14 @@ class Valval {
                 }
             }
         }
+        // End default params
     }
     checkAllChange(item) {
         this.checkValid(item);
         this.checkValidationElement(item);
-        this.invalidSize = this.getInvalidElementsSize(item);
         this.outputCallbackWhenElementValid(item);
         this.outputCallbackWhenElementInvalid(item);
+        this.invalidSize = this.getInvalidElementsSize(item);
     }
     getSizeOptions(options) {
         for (let item in options) {
@@ -335,7 +331,7 @@ class Valval {
             this.options = options;
 
             for (let item in options) {
-                if (!options[item].button) {
+                if (!options[item].button && !options[item].formSubmit) {
 
                     options[item].element.addEventListener('input', () => {
                         const value = options[item].element.value;
@@ -520,4 +516,4 @@ class Valval {
     }
 }
 
-// module.exports.Valval = Valval;
+module.exports.Valval = Valval;
