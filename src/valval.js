@@ -32,7 +32,7 @@ class Valval {
 
         form.addEventListener('submit', event => {
             item.preventDefault && event.preventDefault();
-            console.log(this.getInvalidSize());
+
             this.outputCallbackWhenElementValid(item);
             this.outputCallbackWhenElementInvalid(item);
             this.checkValidationElement(item);
