@@ -27,6 +27,7 @@ This is a library for form validation. This library is under development, so don
     import { Valval } from 'valval';
 
     const options = {
+		preventDefault: true,
         // Name which we indicated in "data-valval"
         firstName: {
             // Indicate params
@@ -66,7 +67,6 @@ This is a library for form validation. This library is under development, so don
         },
         form: {
             formSubmit: true,
-            classValid: 'valid-form',
             classValid: ['invalid-form', 'invalid-form2'],
             handlerWhenValidForm: function() {
                 alert('Valid!');
@@ -103,6 +103,11 @@ This is a library for form validation. This library is under development, so don
     | selectorEl | String | Element selector | ``` selectorEl: '.validation-el' ``` |
     | textWhenValid | String | Element text after successful check | ``` textWhenValid: 'Successfully' ``` |
     | textWhenInvalid | String | Element text after unsuccessful check | ``` textWhenValid: 'Unsuccessfully' ``` |
+-**In object "options"**
+
+  | Option | Type | Value | Example |
+  | ------ | ------ | ------ | ------ |
+  | preventDefault | Boolean | To cancel page reload when sending data (default true) | ``` preventDefault: true ``` |
 - **Unique**
 
     Options in ``` password ```
@@ -125,7 +130,6 @@ This is a library for form validation. This library is under development, so don
     | classValid | String or Object | Element class after successful check (the default class is .valval-valid). Or multiple classes ``` classValid: ['class1', 'class2', ...] ``` | ``` classValid: 'valid' ``` |
     | classInvalid | String or Object | Element class after unsuccessful validation (the default class is .valval-invalid). Or multiple classes ``` classInvalid: ['class1', 'class2', ...] ``` | ``` classInvalid: 'invalid' ``` |
     | validationElement | Object | Item options to check | ``` validationElement: { have: true, selectorEl: '.password__valid' } ``` |
-    | preventDefault | Boolean | To cancel page reload when sending data (default true) | ``` preventDefault: false ``` |
 
     >**besides: '*', '+', '(', ')', '$', '^', '?', '/', '|', '\\'.**
     >**Used when items (onlyEn, onlyRus, onlyNumbers) are disabled**
@@ -139,7 +143,6 @@ This is a library for form validation. This library is under development, so don
     | classValid | String or Object | Element class after successful check (the default class is .valval-valid). Or multiple classes ``` classValid: ['class1', 'class2', ...] ``` | ``` classValid: 'valid' ``` |
     | classInvalid | String or Object | Element class after unsuccessful validation (the default class is .valval-invalid). Or multiple classes ``` classInvalid: ['class1', 'class2', ...] ``` | ``` classInvalid: 'invalid' ``` |
     | validationElement | Object | Item options to check | ``` validationElement: { have: true, selectorEl: '.repeat-password__valid' } ``` |
-    | preventDefault | Boolean | To cancel page reload when sending data (default true) | ``` preventDefault: false ``` |
 
     Options in ``` mail ```
     | Option | Type | Value | Example |
@@ -150,7 +153,6 @@ This is a library for form validation. This library is under development, so don
     | classValid | String or Object | Element class after successful check (the default class is .valval-valid). Or multiple classes ``` classValid: ['class1', 'class2', ...] ``` | ``` classValid: 'valid' ``` |
     | classInvalid | String or Object | Element class after unsuccessful validation (the default class is .valval-invalid). Or multiple classes ``` classInvalid: ['class1', 'class2', ...] ``` | ``` classInvalid: 'invalid' ``` |
     | validationElement | Object | Item options to check | ``` validationElement: { have: true, selectorEl: '.mail__valid' } ``` |
-    | preventDefault | Boolean | To cancel page reload when sending data (default true) | ``` preventDefault: false ``` |
 
     Options in ``` date ```
     | Option | Type | Value | Example |
@@ -169,7 +171,6 @@ This is a library for form validation. This library is under development, so don
     | classValid | String or Object | Element class after successful check (the default class is .valval-valid). Or multiple classes ``` classValid: ['class1', 'class2', ...] ``` | ``` classValid: 'valid' ``` |
     | classInvalid | String or Object | Element class after unsuccessful validation (the default class is .valval-invalid). Or multiple classes ``` classInvalid: ['class1', 'class2', ...] ``` | ``` classInvalid: 'invalid' ``` |
     | validationElement | Object | Item options to check | ``` validationElement: { have: true, selectorEl: '.date__valid' } ``` |
-    | preventDefault | Boolean | To cancel page reload when sending data (default true) | ``` preventDefault: false ``` |
 
     Options in ``` tel ```
     | Option | Type | Value | Example |
@@ -182,7 +183,6 @@ This is a library for form validation. This library is under development, so don
     | classValid | String or Object | Element class after successful check (the default class is .valval-valid). Or multiple classes ``` classValid: ['class1', 'class2', ...] ``` | ``` classValid: 'valid' ``` |
     | classInvalid | String or Object | Element class after unsuccessful validation (the default class is .valval-invalid). Or multiple classes ``` classInvalid: ['class1', 'class2', ...] ``` | ``` classInvalid: 'invalid' ``` |
     | validationElement | Object | Item options to check | ``` validationElement: { have: true, selectorEl: '.tel__valid' } ``` |
-    | preventDefault | Boolean | To cancel page reload when sending data (default true) | ``` preventDefault: false ``` |
 
     Options in ``` name ```
     | Option | Type | Value | Example |
@@ -203,7 +203,6 @@ This is a library for form validation. This library is under development, so don
     | classValid | String or Object | Element class after successful check (the default class is .valval-valid). Or multiple classes ``` classValid: ['class1', 'class2', ...] ``` | ``` classValid: 'valid' ``` |
     | classInvalid | String or Object | Element class after unsuccessful validation (the default class is .valval-invalid). Or multiple classes ``` classInvalid: ['class1', 'class2', ...] ``` | ``` classInvalid: 'invalid' ``` |
     | validationElement | Object | Item options to check | ``` validationElement: { have: true, selectorEl: '.name__valid' } ``` |
-    | preventDefault | Boolean | To cancel page reload when sending data (default true) | ``` preventDefault: false ``` |
 
     Options in ``` message ```
     | Option | Type | Value | Example |
@@ -216,7 +215,6 @@ This is a library for form validation. This library is under development, so don
     | classValid | String or Object | Element class after successful check (the default class is .valval-valid). Or multiple classes ``` classValid: ['class1', 'class2', ...] ``` | ``` classValid: 'valid' ``` |
     | classInvalid | String or Object | Element class after unsuccessful validation (the default class is .valval-invalid). Or multiple classes ``` classInvalid: ['class1', 'class2', ...] ``` | ``` classInvalid: 'invalid' ``` |
     | validationElement | Object | Item options to check | ``` validationElement: { have: true, selectorEl: '.message__valid' } ``` |
-    | preventDefault | Boolean | To cancel page reload when sending data (default true) | ``` preventDefault: false ``` |
 
     Options in ``` button ```
     | Option | Type | Value | Example |
