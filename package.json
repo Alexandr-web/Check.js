@@ -1,6 +1,6 @@
 {
     "name": "valval",
-    "version": "2.5.2",
+    "version": "2.5.4",
     "description": "Form validation library",
     "main": "dist/valval.min.js",
     "scripts": {
