@@ -222,7 +222,7 @@ class Valval {
   }
   getDefaultParams(options) {
       for (let item in options) {
-        if (item !== 'preventDefault') {
+        if (typeof options[item] === 'object') {
           // Start default params
           // Obj options
           options[item].objOptions = options;
@@ -485,7 +485,7 @@ class Valval {
               }
             });
             for (let i in options[item].objOptions) {
-              if (i === options[item].repeatAt) {
+              if (i === options[item].repeatAt && options[item].objOptions['repeatAt']) {
                 options[item].objOptions[i].element.addEventListener('input', () => {
                   if (!options[item].objOptions[i].element.value) {
                     if (options[item].repeatPassword) {

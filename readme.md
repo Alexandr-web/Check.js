@@ -27,7 +27,7 @@ This is a library for form validation. This library is under development, so don
     import { Valval } from 'valval';
 
     const options = {
-		preventDefault: true,
+		    preventDefault: true,
         // Name which we indicated in "data-valval"
         firstName: {
             // Indicate params
@@ -103,11 +103,11 @@ This is a library for form validation. This library is under development, so don
     | selectorEl | String | Element selector | ``` selectorEl: '.validation-el' ``` |
     | textWhenValid | String | Element text after successful check | ``` textWhenValid: 'Successfully' ``` |
     | textWhenInvalid | String | Element text after unsuccessful check | ``` textWhenValid: 'Unsuccessfully' ``` |
--**In object "options"**
+- **In object "options"**
 
-  | Option | Type | Value | Example |
-  | ------ | ------ | ------ | ------ |
-  | preventDefault | Boolean | To cancel page reload when sending data (default true) | ``` preventDefault: true ``` |
+    | Option | Type | Value | Example |
+    | ------ | ------ | ------ | ------ |
+    | preventDefault | Boolean | To cancel page reload when sending data | ``` preventDefault: true ``` |
 - **Unique**
 
     Options in ``` password ```
