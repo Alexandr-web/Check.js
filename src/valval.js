@@ -513,4 +513,4 @@ class Valval {
   }
 }
 
-module.exports.Valval = Valval;
+export default Valval;

@@ -24,7 +24,7 @@ This is a library for form validation. This library is under development, so don
 ```
 - **JavaScript**
 ```javascript
-    import { Valval } from 'valval';
+    import Valval from 'valval';
 
     const options = {
 		    preventDefault: true,
